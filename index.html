@@ -8,16 +8,15 @@
   :root {
     --bg: #0f172a;
     --surface: #1e293b;
-    --card-front: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%);
-    --card-back: linear-gradient(135deg, #1a3c34 0%, #0f172a 100%);
+    --card-front: linear-gradient(135deg, #0f172a 0%, #1a2744 100%);
+    --card-back: linear-gradient(135deg, #0d1f1a 0%, #0f172a 100%);
     --accent: #38bdf8;
     --accent2: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
     --text: #e2e8f0;
     --text-dim: #94a3b8;
     --border: #334155;
-    --danger: #f87171;
-    --warning: #fbbf24;
-    --success: #34d399;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,74 +26,73 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    overflow-x: hidden;
   }
 
-  /* ===== Header ===== */
+  /* Header */
   .header {
     text-align: center;
-    padding: 2rem 1rem 1rem;
-    background: linear-gradient(180deg, rgba(56,189,248,0.08) 0%, transparent 100%);
+    padding: 1.5rem 1rem 0.8rem;
+    background: linear-gradient(180deg, rgba(56,189,248,0.05) 0%, transparent 100%);
   }
   .header h1 {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    letter-spacing: 0.02em;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
   .header .subtitle {
     color: var(--text-dim);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin-top: 0.3rem;
   }
-  .header .rule-box {
-    max-width: 600px;
-    margin: 1rem auto 0;
+  .rule-box {
+    max-width: 680px;
+    margin: 0.8rem auto 0;
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 0.8rem 1.2rem;
-    font-size: 0.82rem;
+    border-radius: 8px;
+    padding: 0.7rem 1rem;
+    font-size: 0.78rem;
     color: var(--text-dim);
     line-height: 1.7;
     text-align: left;
   }
-  .header .rule-box strong { color: var(--accent); }
+  .rule-box strong { color: var(--accent); }
+  .rule-box .example { color: var(--accent2); }
 
-  /* ===== Controls ===== */
+  /* Controls */
   .controls {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.4rem;
     justify-content: center;
-    padding: 1rem;
+    padding: 0.8rem 1rem;
     max-width: 900px;
     margin: 0 auto;
   }
   .filter-btn {
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
+    padding: 0.35rem 0.9rem;
+    border-radius: 18px;
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text-dim);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     cursor: pointer;
     transition: all 0.2s;
   }
   .filter-btn:hover { border-color: var(--accent); color: var(--text); }
   .filter-btn.active {
-    background: linear-gradient(135deg, rgba(56,189,248,0.2), rgba(52,211,153,0.15));
+    background: rgba(56,189,248,0.15);
     border-color: var(--accent);
     color: var(--accent);
   }
 
-  /* ===== Progress ===== */
-  .progress-bar-container {
+  /* Progress */
+  .progress-area {
     max-width: 900px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 0 1rem 0.5rem;
   }
   .progress-bar {
     height: 4px;
@@ -102,156 +100,187 @@
     border-radius: 2px;
     overflow: hidden;
   }
-  .progress-bar-fill {
+  .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--accent), var(--accent2));
-    border-radius: 2px;
-    transition: width 0.4s ease;
+    transition: width 0.3s;
     width: 0%;
   }
   .progress-text {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: var(--text-dim);
-    margin-top: 0.3rem;
+    margin-top: 0.25rem;
     text-align: center;
   }
 
-  /* ===== Card Container ===== */
+  /* Card Area */
   .card-area {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 420px;
-    padding: 1.5rem 1rem;
+    padding: 1rem;
+    min-height: 450px;
   }
 
   .card-wrapper {
-    perspective: 1200px;
+    perspective: 1000px;
     width: 100%;
-    max-width: 520px;
+    max-width: 480px;
   }
 
   .card {
     position: relative;
     width: 100%;
-    min-height: 380px;
+    height: 400px;
     cursor: pointer;
     transform-style: preserve-3d;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   }
   .card.flipped { transform: rotateY(180deg); }
 
   .card-face {
     position: absolute;
     top: 0; left: 0;
-    width: 100%;
-    min-height: 380px;
+    width: 100%; height: 100%;
     backface-visibility: hidden;
-    border-radius: 16px;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
+    border-radius: 12px;
     border: 1px solid var(--border);
     overflow: hidden;
   }
 
   .card-front {
     background: var(--card-front);
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    text-align: center;
+    justify-content: center;
+    padding: 1rem;
   }
 
   .card-back {
     background: var(--card-back);
     transform: rotateY(180deg);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Card front content */
+  /* Front content */
   .card-number {
     position: absolute;
-    top: 1rem;
-    left: 1.2rem;
-    font-size: 0.75rem;
+    top: 0.7rem; left: 1rem;
+    font-size: 0.7rem;
     color: var(--text-dim);
     font-weight: 600;
   }
   .card-category {
     position: absolute;
-    top: 1rem;
-    right: 1.2rem;
-    font-size: 0.7rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 10px;
-    background: rgba(56,189,248,0.15);
+    top: 0.7rem; right: 1rem;
+    font-size: 0.65rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 8px;
+    background: rgba(56,189,248,0.1);
     color: var(--accent);
-    border: 1px solid rgba(56,189,248,0.25);
+    border: 1px solid rgba(56,189,248,0.2);
   }
-  .card-name {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+  .structure-image {
+    max-width: 100%;
+    max-height: 280px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 6px;
+    padding: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
-  .card-latin {
-    font-size: 0.95rem;
+  .structure-placeholder {
+    width: 100%;
+    height: 260px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--text-dim);
-    font-style: italic;
-    margin-bottom: 0.3rem;
-  }
-  .card-formula {
     font-size: 0.85rem;
-    color: var(--text-dim);
-    font-family: "Courier New", monospace;
+    border: 1px dashed var(--border);
   }
-  .card-hint {
+  .flip-hint {
     position: absolute;
-    bottom: 1rem;
-    font-size: 0.75rem;
+    bottom: 0.7rem;
+    font-size: 0.7rem;
     color: var(--text-dim);
-    opacity: 0.6;
+    opacity: 0.5;
   }
 
-  /* Card back content */
-  .back-label {
-    font-size: 0.7rem;
+  /* Back content */
+  .answer-section {
+    margin-bottom: 0.8rem;
+  }
+  .answer-label {
+    font-size: 0.65rem;
     color: var(--text-dim);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.25rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.15rem;
   }
-  .back-value {
-    margin-bottom: 1rem;
+  .answer-value {
+    font-size: 0.95rem;
+    color: var(--text);
   }
-  .back-value.chapter { color: var(--accent); font-weight: 600; font-size: 1rem; }
-  .back-value.primary { color: var(--warning); font-size: 0.95rem; }
-  .back-value.secondary {
-    color: var(--accent2);
-    font-size: 1.15rem;
+  .answer-value.name {
+    font-size: 1.3rem;
     font-weight: 700;
-    padding: 0.4rem 0.8rem;
-    background: rgba(52,211,153,0.1);
-    border-radius: 8px;
-    border: 1px solid rgba(52,211,153,0.2);
-    display: inline-block;
+    color: var(--accent);
+    margin-bottom: 0.1rem;
   }
-  .back-value.activity { color: var(--text); font-size: 0.95rem; }
+  .answer-value.latin {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  .answer-value.secondary {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent2);
+    padding: 0.3rem 0.6rem;
+    background: rgba(52,211,153,0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(52,211,153,0.15);
+    display: inline-block;
+    margin-top: 0.1rem;
+  }
+  .answer-value.activity {
+    font-size: 0.9rem;
+    color: var(--warning);
+  }
 
-  /* ===== Navigation ===== */
+  .answer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+  }
+  .answer-box {
+    background: rgba(30,41,59,0.5);
+    border-radius: 6px;
+    padding: 0.5rem;
+  }
+
+  /* Navigation */
   .nav-area {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
-    padding: 0 1rem 1rem;
+    gap: 0.8rem;
+    padding: 0.5rem 1rem;
   }
   .nav-btn {
-    width: 48px;
-    height: 48px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text);
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
@@ -266,51 +295,37 @@
     gap: 0.5rem;
   }
   .mastery-btn {
-    padding: 0.5rem 1.2rem;
-    border-radius: 10px;
+    padding: 0.4rem 1rem;
+    border-radius: 8px;
     border: 1px solid var(--border);
     background: var(--surface);
     color: var(--text-dim);
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     cursor: pointer;
     transition: all 0.2s;
   }
   .mastery-btn:hover { border-color: var(--text-dim); color: var(--text); }
-  .mastery-btn.know {
-    border-color: rgba(52,211,153,0.3);
-    color: var(--success);
-  }
+  .mastery-btn.know { border-color: rgba(52,211,153,0.3); color: var(--accent2); }
   .mastery-btn.know:hover { background: rgba(52,211,153,0.1); }
-  .mastery-btn.dont-know {
-    border-color: rgba(248,113,113,0.3);
-    color: var(--danger);
-  }
+  .mastery-btn.dont-know { border-color: rgba(248,113,113,0.3); color: var(--danger); }
   .mastery-btn.dont-know:hover { background: rgba(248,113,113,0.1); }
 
-  /* ===== Mode toggle ===== */
-  .mode-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    padding: 0 1rem 0.5rem;
-  }
-  .mode-btn {
-    padding: 0.3rem 0.8rem;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-    background: transparent;
+  /* Keyboard hint */
+  .keyboard-hint {
+    text-align: center;
+    font-size: 0.65rem;
     color: var(--text-dim);
-    font-size: 0.75rem;
-    cursor: pointer;
-    transition: all 0.2s;
+    opacity: 0.4;
+    padding: 0.4rem;
   }
-  .mode-btn.active {
+  kbd {
     background: var(--surface);
-    color: var(--accent);
-    border-color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.1rem 0.35rem;
   }
 
-  /* ===== Special section ===== */
+  /* Special section */
   .special-section {
     max-width: 900px;
     margin: 1rem auto;
@@ -319,110 +334,77 @@
   .special-card {
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
+    border-radius: 10px;
+    padding: 1.2rem;
+    margin-bottom: 0.8rem;
   }
   .special-card h3 {
     color: var(--accent);
-    font-size: 1rem;
-    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
   }
   .special-card p, .special-card li {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-dim);
-    line-height: 1.8;
+    line-height: 1.7;
   }
-  .special-card ul { padding-left: 1.2rem; }
-  .special-card .highlight { color: var(--accent2); font-weight: 600; }
-  .special-card .warning { color: var(--warning); font-weight: 600; }
+  .special-card ul { padding-left: 1rem; margin-top: 0.3rem; }
+  .special-card .hl { color: var(--accent2); font-weight: 600; }
+  .special-card .warn { color: var(--warning); font-weight: 600; }
 
   .compare-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
   }
   .compare-table th {
     background: rgba(56,189,248,0.1);
     color: var(--accent);
-    padding: 0.6rem;
+    padding: 0.5rem;
     text-align: left;
     border: 1px solid var(--border);
   }
   .compare-table td {
-    padding: 0.5rem 0.6rem;
+    padding: 0.4rem 0.5rem;
     border: 1px solid var(--border);
     color: var(--text-dim);
   }
 
-  /* ===== Keyboard hint ===== */
-  .keyboard-hint {
-    text-align: center;
-    font-size: 0.7rem;
-    color: var(--text-dim);
-    opacity: 0.5;
-    padding: 0.5rem;
-  }
-  kbd {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 3px;
-    padding: 0.1rem 0.4rem;
-    font-size: 0.65rem;
-  }
-
-  /* ===== Responsive ===== */
-  @media (max-width: 600px) {
-    .header h1 { font-size: 1.2rem; }
-    .card-face { padding: 1.5rem; min-height: 320px; }
-    .card { min-height: 320px; }
-    .card-name { font-size: 1.5rem; }
+  /* Responsive */
+  @media (max-width: 500px) {
+    .header h1 { font-size: 1.1rem; }
+    .card { height: 350px; }
+    .structure-image { max-height: 220px; }
     .mastery-btns { flex-direction: column; }
-    .nav-area { flex-wrap: wrap; }
   }
 
-  /* ===== Animations ===== */
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(20px); }
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .card-wrapper { animation: slideIn 0.3s ease; }
-
-  /* ===== Shuffle indicator ===== */
-  .shuffle-flash {
-    animation: shufflePulse 0.3s ease;
-  }
-  @keyframes shufflePulse {
-    0% { opacity: 0.5; transform: scale(0.95); }
-    100% { opacity: 1; transform: scale(1); }
-  }
+  .card-wrapper { animation: fadeIn 0.25s ease; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>🧪 天然药物化学 · 典型化合物结构题</h1>
-  <p class="subtitle">给结构 → 写【俗名 + 二级结构类型 + 临床用途/活性】</p>
+  <p class="subtitle">给结构式 → 写【俗名 + 二级结构类型 + 临床用途/活性】</p>
   <div class="rule-box">
-    <strong>二级结构判定铁律：</strong>一级 = 大母核/总类（甾体、黄酮、生物碱…）→ <strong>二级</strong> = 母核往下分的类型（甾体→强心苷；黄酮→黄酮醇）← <strong>写到这一级</strong>；三级 = 再细分（强心苷→甲型/乙型）← 不用写。<br>
-    例：地高辛 → 写「强心苷」即可，不写「甲型强心苷」
+    <strong>考试答题铁律：</strong>看结构图 → 报三样 → <strong>①俗名</strong>（中文常用名） + <strong>②二级结构类型</strong>（如强心苷、黄酮醇） + <strong>③活性/用途</strong>（具体如抗疟、强心）。<br>
+    <strong>二级结构判定：</strong>一级=大母核（甾体/黄酮/生物碱）；<span class="example">二级=母核往下分（甾体→强心苷；黄酮→黄酮醇）←写到这一级</span>；三级=再细分（强心苷→甲型/乙型）←不用写。<br>
+    <span class="example">例：地高辛 → 写「强心苷」即可，不写「甲型强心苷」</span>
   </div>
 </div>
 
-<!-- Mode Toggle -->
-<div class="mode-toggle">
-  <button class="mode-btn active" onclick="setMode('structure')">🔬 看结构→报信息</button>
-  <button class="mode-btn" onclick="setMode('reverse')">🏷️ 看名字→背结构</button>
-  <button class="mode-btn" onclick="setMode('random')">🎲 随机混合</button>
-</div>
-
-<!-- Category Filters -->
+<!-- Filters -->
 <div class="controls" id="filters"></div>
 
 <!-- Progress -->
-<div class="progress-bar-container">
-  <div class="progress-bar"><div class="progress-bar-fill" id="progressFill"></div></div>
+<div class="progress-area">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="progress-text" id="progressText">0 / 0 已掌握</div>
 </div>
 
@@ -444,286 +426,382 @@
     <button class="mastery-btn know" onclick="markCard('know')">✓ 会了</button>
   </div>
   <button class="nav-btn" onclick="nextCard()" id="nextBtn">▶</button>
+  <button class="nav-btn" onclick="shuffleCards()" title="随机排序">🔀</button>
 </div>
 
 <div class="keyboard-hint">
   <kbd>←</kbd> 上一张 &nbsp; <kbd>→</kbd> 下一张 &nbsp; <kbd>Space</kbd> 翻转 &nbsp; <kbd>1</kbd> 不会 &nbsp; <kbd>2</kbd> 会了
 </div>
 
-<!-- Special Section: 强心苷专题 -->
+<!-- Special Section -->
 <div class="special-section" id="specialSection" style="display:none;">
   <div class="special-card">
-    <h3>💊 甾体强心苷专题 — 品种速记</h3>
-    <p><strong>毛地黄毒苷 Digitoxin (C₄₁H₆₄O₁₃)</strong>：苷元 C3,C14-OH；3 分子洋地黄毒糖；强心代表，脂溶性强、作用持久</p>
-    <p><strong>地高辛 Digoxin ★</strong>：在毛地黄毒苷基础上 C12 多一个 -OH；临床最常用强心苷；血浆 t½≈33h；治疗窗窄需监测中毒</p>
-    <p><strong>去乙酰毛地黄毒苷 Deslanoside</strong>：毛花苷 C 去乙酰；含葡萄糖 + 3 洋地黄毒糖；注射用，起效较快</p>
-    <p><strong>黄夹苷甲/乙 Thevetin A/B</strong>：黄花夹竹桃种子；甲型强心苷元；强心，用于心衰</p>
+    <h3>💊 甾体强心苷专题</h3>
+    <p><strong>毛地黄毒苷 Digitoxin</strong>：苷元 C3,C14-OH；3分子洋地黄毒糖；强心代表，脂溶性强</p>
+    <p><strong>地高辛 Digoxin ★</strong>：C12多一个-OH；临床最常用；血浆 t½≈33h；治疗窗窄需监测</p>
+    <p><strong>去乙酰毛地黄毒苷</strong>：毛花苷C去乙酰；注射用，起效较快</p>
+    <p><strong>黄夹苷甲/乙</strong>：黄花夹竹桃；甲型强心苷元</p>
   </div>
 
   <div class="special-card">
-    <h3>⚡ 甲型 vs 乙型强心苷元（选择/简答高频考点）</h3>
+    <h3>⚡ 甲型 vs 乙型强心苷元</h3>
     <table class="compare-table">
-      <tr><th>比较项</th><th>甲型（强心甾烯类）</th><th>乙型（海葱甾二烯类）</th></tr>
-      <tr><td>C17 内酯环</td><td class="highlight">五元 α,β-不饱和-γ-内酯环</td><td>六元 双烯-δ-内酯环</td></tr>
+      <tr><th>比较项</th><th>甲型（强心甾烯）</th><th>乙型（海葱甾二烯）</th></tr>
+      <tr><td>C17内酯环</td><td class="hl">五元 α,β-不饱和-γ-内酯</td><td>六元 双烯-δ-内酯</td></tr>
       <tr><td>碳原子数</td><td>C₂₃</td><td>C₂₄</td></tr>
-      <tr><td>UV 最大吸收</td><td>~218 nm</td><td>~295 nm</td></tr>
-      <tr><td>毒性</td><td>相对较小</td><td class="warning">乙型 > 甲型</td></tr>
-      <tr><td>代表</td><td>洋地黄/毛地黄类、黄夹苷</td><td>海葱、蟾酥类</td></tr>
-      <tr><td>显色反应</td><td>Legal/Raymond/Kedde 阳性</td><td>一般不呈这些反应</td></tr>
+      <tr><td>UV最大吸收</td><td>~218 nm</td><td>~295 nm</td></tr>
+      <tr><td>毒性</td><td>相对较小</td><td class="warn">乙型 > 甲型</td></tr>
+      <tr><td>代表</td><td>洋地黄类、黄夹苷</td><td>海葱、蟾酥</td></tr>
     </table>
   </div>
 
   <div class="special-card">
-    <h3>🧪 强心苷鉴别反应速记</h3>
+    <h3>🧪 鉴别反应速记</h3>
     <ul>
-      <li><strong>2-去氧糖（α-去氧糖）</strong>：强心苷特有 → 洋地黄毒糖、加拿大麻糖、夹竹桃糖</li>
-      <li><strong>K-K 反应</strong>：检查 2-去氧糖 → 冰醋酸-FeCl₃ / 浓硫酸，两液面交界显色</li>
-      <li><strong>C17 内酯环显色（甲型）</strong>：Legal / Kedde / Raymond / Baljet → 检查甲型五元不饱和内酯</li>
-      <li><strong>甾核显色</strong>：Liebermann-Burchard / 氯仿-硫酸 → 检查甾体母核</li>
-      <li class="warning">★ 水解扣分点：羟基毛地黄毒苷因 C16-OH，强酸水解时苷元脱水 → 得"三脱水产物"而非原苷元</li>
-    </ul>
-  </div>
-
-  <div class="special-card">
-    <h3>📝 答题踩分要点</h3>
-    <ul>
-      <li>① 俗名写中文常用名：芦丁、小檗碱、青蒿素；<strong>不写化学全名</strong></li>
-      <li>② 结构类型只写到<strong>二级</strong>：✓ 强心苷/黄酮醇/倍半萜/异喹啉类生物碱；✗ 甲型强心苷（三级）；✗ 只写"甾体"（一级太粗会扣分）</li>
-      <li>③ 活性写具体：抗疟/强心/平喘，不写笼统的"有药理作用"</li>
-      <li>④ 不画结构图：只需看图 → 报【俗名+二级类型+活性】三样</li>
+      <li><span class="hl">2-去氧糖</span>：强心苷特有 → 洋地黄毒糖、加拿大麻糖</li>
+      <li><strong>K-K反应</strong>：检查2-去氧糖 → 冰醋酸-FeCl₃/浓硫酸交界显色</li>
+      <li><strong>C17显色(甲型)</strong>：Legal/Kedde/Raymond → 五元不饱和内酯阳性</li>
+      <li><strong>甾核显色</strong>：Liebermann-Burchard/氯仿-硫酸 → 甾体母核</li>
+      <li class="warn">★水解扣分点：羟基毛地黄毒苷因C16-OH，强酸水解苷元脱水→三脱水产物</li>
     </ul>
   </div>
 </div>
 
 <script>
 // ===== Flashcard Data =====
+// PubChem 2D structure URL: https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{name}/PNG
+// 本地图片优先：structures/{id}-{name}.png
+
 const CARDS = [
   {
-    id: 1, name: "芦丁（芸香苷）", latin: "Rutin", formula: "C₂₇H₃₀O₁₆",
-    category: "黄酮", tag: "黄酮",
+    id: 1,
+    name: "芦丁",
+    nameAlt: "芸香苷",
+    latin: "Rutin",
+    formula: "C₂₇H₃₀O₁₆",
+    tag: "黄酮",
     chapter: "糖和苷 / 黄酮",
-    primary: "黄酮（C6-C3-C6，两苯环(A/B环)经三碳链连成 γ-吡喃酮(C环)）",
+    primary: "黄酮（C6-C3-C6）",
     secondary: "黄酮(醇)苷",
-    activity: "降低毛细血管通透性、维持血管韧性、防治脆性出血"
+    activity: "降低毛细血管通透性、维持血管韧性、防治脆性出血",
+    pubchemName: "Rutin"
   },
   {
-    id: 2, name: "秦皮乙素（七叶内酯）", latin: "Esculetin", formula: "C₉H₆O₄",
-    category: "香豆素", tag: "香豆素",
+    id: 2,
+    name: "秦皮乙素",
+    nameAlt: "七叶内酯",
+    latin: "Esculetin",
+    formula: "C₉H₆O₄",
+    tag: "香豆素",
     chapter: "香豆素",
-    primary: "香豆素（苯环并 α-吡喃酮，即邻羟基桂皮酸内酯）",
+    primary: "香豆素（苯并α-吡喃酮）",
     secondary: "简单香豆素",
-    activity: "抗菌、抗炎（秦皮抗菌有效成分）"
+    activity: "抗菌、抗炎（秦皮抗菌有效成分）",
+    pubchemName: "Esculetin"
   },
   {
-    id: 3, name: "五味子醇甲", latin: "Schisandrin", formula: "C₂₄H₃₂O₇",
-    category: "木脂素", tag: "木脂素",
+    id: 3,
+    name: "五味子醇甲",
+    latin: "Schisandrin",
+    formula: "C₂₄H₃₂O₇",
+    tag: "木脂素",
     chapter: "木脂素",
-    primary: "联苯环辛烯（两个苯环 + 八元碳环稠合）",
+    primary: "联苯环辛烯",
     secondary: "联苯环辛烯类木脂素",
-    activity: "保肝、降转氨酶、镇静"
+    activity: "保肝、降转氨酶、镇静",
+    pubchemName: "Schisandrin"
   },
   {
-    id: 4, name: "大黄素", latin: "Emodin", formula: "C₁₅H₁₀O₅",
-    category: "醌类", tag: "醌类",
+    id: 4,
+    name: "大黄素",
+    latin: "Emodin",
+    formula: "C₁₅H₁₀O₅",
+    tag: "醌类",
     chapter: "醌类 · 蒽醌",
-    primary: "蒽醌（三个六元环线性稠合，中环为对醌）",
+    primary: "蒽醌（三环线性稠合）",
     secondary: "羟基蒽醌",
-    activity: "泻下、抗菌"
+    activity: "泻下、抗菌",
+    pubchemName: "Emodin"
   },
   {
-    id: 5, name: "丹参酮ⅡA", latin: "Tanshinone IIA", formula: "C₁₉H₁₈O₃",
-    category: "醌类", tag: "醌类",
+    id: 5,
+    name: "丹参酮ⅡA",
+    latin: "Tanshinone IIA",
+    formula: "C₁₉H₁₈O₃",
+    tag: "醌类",
     chapter: "醌类 · 菲醌",
-    primary: "菲醌（菲核三环上的邻醌，两个相邻 C=O）",
+    primary: "菲醌（菲核邻醌）",
     secondary: "菲醌(邻醌)",
-    activity: "活血化瘀、扩张冠脉、抗心肌缺血"
+    activity: "活血化瘀、扩张冠脉、抗心肌缺血",
+    pubchemName: "Tanshinone IIA"
   },
   {
-    id: 6, name: "槲皮素", latin: "Quercetin", formula: "C₁₅H₁₀O₇",
-    category: "黄酮", tag: "黄酮",
+    id: 6,
+    name: "槲皮素",
+    latin: "Quercetin",
+    formula: "C₁₅H₁₀O₇",
+    tag: "黄酮",
     chapter: "黄酮类",
-    primary: "黄酮（C6-C3-C6，两苯环经三碳链连成 γ-吡喃酮）",
+    primary: "黄酮（C6-C3-C6）",
     secondary: "黄酮醇",
-    activity: "抗氧化、扩张冠脉、降血脂"
+    activity: "抗氧化、扩张冠脉、降血脂",
+    pubchemName: "Quercetin"
   },
   {
-    id: 7, name: "青蒿素", latin: "Artemisinin", formula: "C₁₅H₂₂O₅",
-    category: "萜类", tag: "萜类",
+    id: 7,
+    name: "青蒿素",
+    latin: "Artemisinin",
+    formula: "C₁₅H₂₂O₅",
+    tag: "萜类",
     chapter: "萜类 / 挥发油",
-    primary: "倍半萜（3 个异戊二烯单位 C₁₅ 构成的萜类骨架）",
+    primary: "倍半萜（C₁₅）",
     secondary: "倍半萜内酯(过氧化物)",
-    activity: "抗疟（屠呦呦因此获诺贝尔奖）"
+    activity: "抗疟（屠呦呦获诺贝尔奖）",
+    pubchemName: "Artemisinin"
   },
   {
-    id: 8, name: "薄荷醇（薄荷脑）", latin: "Menthol", formula: "C₁₀H₂₀O",
-    category: "萜类", tag: "萜类",
+    id: 8,
+    name: "薄荷醇",
+    nameAlt: "薄荷脑",
+    latin: "Menthol",
+    formula: "C₁₀H₂₀O",
+    tag: "萜类",
     chapter: "单萜 / 挥发油",
-    primary: "单萜（2 个异戊二烯单位 C₁₀，多为环状）",
+    primary: "单萜（C₁₀）",
     secondary: "环状单萜(醇)",
-    activity: "局部清凉、止痛止痒、抗菌"
+    activity: "局部清凉、止痛止痒、抗菌",
+    pubchemName: "Menthol"
   },
   {
-    id: 9, name: "齐墩果酸", latin: "Oleanolic acid", formula: "C₃₀H₄₈O₃",
-    category: "三萜", tag: "三萜",
+    id: 9,
+    name: "齐墩果酸",
+    latin: "Oleanolic acid",
+    formula: "C₃₀H₄₈O₃",
+    tag: "三萜",
     chapter: "三萜 · 五环",
-    primary: "五环三萜（5 个稠合六元环，齐墩果烷 A/B/C/D/E 环，C₃₀）",
+    primary: "五环三萜",
     secondary: "五环三萜(齐墩果烷型)",
-    activity: "保肝、降转氨酶"
+    activity: "保肝、降转氨酶",
+    pubchemName: "Oleanolic acid"
   },
   {
-    id: 10, name: "人参皂苷Rb1", latin: "Ginsenoside Rb1", formula: "C₅₄H₉₂O₂₃",
-    category: "三萜", tag: "三萜",
+    id: 10,
+    name: "人参皂苷Rb1",
+    latin: "Ginsenoside Rb1",
+    formula: "C₅₄H₉₂O₂₃",
+    tag: "三萜",
     chapter: "三萜 · 四环",
-    primary: "四环三萜（4 个稠合环，达玛烷型，3 六元 + 1 五元，C₃₀）",
+    primary: "四环三萜",
     secondary: "四环三萜(达玛烷型)皂苷",
-    activity: "大补元气、抗疲劳、调节免疫"
+    activity: "大补元气、抗疲劳、调节免疫",
+    pubchemName: "Ginsenoside Rb1"
   },
   {
-    id: 11, name: "甘草酸（甘草甜素）", latin: "Glycyrrhizic acid", formula: "C₄₂H₆₂O₁₆",
-    category: "三萜", tag: "三萜",
+    id: 11,
+    name: "甘草酸",
+    nameAlt: "甘草甜素",
+    latin: "Glycyrrhizic acid",
+    formula: "C₄₂H₆₂O₁₆",
+    tag: "三萜",
     chapter: "三萜皂苷 · 甘草",
-    primary: "五环三萜（5 个稠合六元环，齐墩果烷型，C₃₀）",
+    primary: "五环三萜",
     secondary: "齐墩果烷型三萜皂苷",
-    activity: "抗炎、抗溃疡、调节免疫、解毒"
+    activity: "抗炎、抗溃疡、调节免疫、解毒",
+    pubchemName: "Glycyrrhizic acid"
   },
   {
-    id: 12, name: "地高辛", latin: "Digoxin", formula: "C₄₁H₆₄O₁₄",
-    category: "甾体", tag: "甾体",
+    id: 12,
+    name: "地高辛",
+    latin: "Digoxin",
+    formula: "C₄₁H₆₄O₁₄",
+    tag: "甾体",
     chapter: "甾体 · 强心苷",
-    primary: "甾体（环戊烷多氢菲：3 个六元环(A/B/C) + 1 个五元环(D)，全稠合）",
+    primary: "甾体（环戊烷多氢菲）",
     secondary: "强心苷",
-    activity: "强心、治疗充血性心力衰竭"
+    activity: "强心、治疗充血性心力衰竭",
+    pubchemName: "Digoxin"
   },
   {
-    id: 13, name: "薯蓣皂苷元", latin: "Diosgenin", formula: "C₂₇H₄₂O₃",
-    category: "甾体", tag: "甾体",
+    id: 13,
+    name: "薯蓣皂苷元",
+    latin: "Diosgenin",
+    formula: "C₂₇H₄₂O₃",
+    tag: "甾体",
     chapter: "甾体皂苷",
-    primary: "甾体（环戊烷多氢菲：3 六元 + 1 五元，全稠合）",
+    primary: "甾体（环戊烷多氢菲）",
     secondary: "甾体皂苷(螺甾烷醇型)",
-    activity: "合成甾体激素原料；祛痰、抗菌"
+    activity: "合成甾体激素原料；祛痰、抗菌",
+    pubchemName: "Diosgenin"
   },
   {
-    id: 14, name: "小檗碱（黄连素）", latin: "Berberine", formula: "C₂₀H₁₈NO₄⁺",
-    category: "生物碱", tag: "生物碱",
+    id: 14,
+    name: "小檗碱",
+    nameAlt: "黄连素",
+    latin: "Berberine",
+    formula: "C₂₀H₁₈NO₄⁺",
+    tag: "生物碱",
     chapter: "生物碱 · 异喹啉",
-    primary: "异喹啉（苯环并吡啶；小檗碱为四环原小檗碱型季铵）",
+    primary: "异喹啉（苯并吡啶）",
     secondary: "异喹啉类生物碱(原小檗碱型)",
-    activity: "抗菌、抗炎、治肠道感染/痢疾"
+    activity: "抗菌、抗炎、治肠道感染/痢疾",
+    pubchemName: "Berberine"
   },
   {
-    id: 15, name: "喜树碱", latin: "Camptothecin", formula: "C₂₀H₁₆N₂O₄",
-    category: "生物碱", tag: "生物碱",
+    id: 15,
+    name: "喜树碱",
+    latin: "Camptothecin",
+    formula: "C₂₀H₁₆N₂O₄",
+    tag: "生物碱",
     chapter: "生物碱 · 喹啉",
-    primary: "喹啉（苯环并吡啶；喜树碱为五环喹啉类）",
+    primary: "喹啉（苯并吡啶）",
     secondary: "喹啉类生物碱",
-    activity: "细胞毒/抗癌（抑制拓扑异构酶 I）"
+    activity: "细胞毒/抗癌（抑制拓扑异构酶I）",
+    pubchemName: "Camptothecin"
   },
   {
-    id: 16, name: "麻黄碱", latin: "Ephedrine", formula: "C₁₀H₁₅NO",
-    category: "生物碱", tag: "生物碱",
+    id: 16,
+    name: "麻黄碱",
+    latin: "Ephedrine",
+    formula: "C₁₀H₁₅NO",
+    tag: "生物碱",
     chapter: "生物碱 · 有机胺",
-    primary: "苯丙胺（苯环 + 三碳侧链含氨基）",
+    primary: "苯丙胺",
     secondary: "有机胺类生物碱",
-    activity: "平喘、解痉、收缩血管/升压"
+    activity: "平喘、解痉、收缩血管/升压",
+    pubchemName: "Ephedrine"
   },
   {
-    id: 17, name: "吗啡", latin: "Morphine", formula: "C₁₇H₁₉NO₃",
-    category: "生物碱", tag: "生物碱",
+    id: 17,
+    name: "吗啡",
+    latin: "Morphine",
+    formula: "C₁₇H₁₉NO₃",
+    tag: "生物碱",
     chapter: "生物碱 · 吗啡烷",
-    primary: "吗啡烷（菲核为主体的五环稠合，含氮环 + 氧桥）",
+    primary: "吗啡烷（菲核五环稠合）",
     secondary: "吗啡烷类生物碱",
-    activity: "强效镇痛；具酸碱两性"
+    activity: "强效镇痛；具酸碱两性",
+    pubchemName: "Morphine"
   },
   {
-    id: 18, name: "莨菪碱/阿托品", latin: "Atropine", formula: "C₁₇H₂₃NO₃",
-    category: "生物碱", tag: "生物碱",
+    id: 18,
+    name: "莨菪碱",
+    nameAlt: "阿托品",
+    latin: "Atropine",
+    formula: "C₁₇H₂₃NO₃",
+    tag: "生物碱",
     chapter: "生物碱 · 莨菪烷",
-    primary: "莨菪烷（六元哌啶环与五元吡咯烷共用氮桥）",
+    primary: "莨菪烷（托烷母核）",
     secondary: "莨菪烷类生物碱",
-    activity: "解痉、散瞳、抑制腺体分泌"
-  }
-];
-
-// Supplementary cards
-const SUPP_CARDS = [
+    activity: "解痉、散瞳、抑制腺体分泌",
+    pubchemName: "Atropine"
+  },
   {
-    id: 19, name: "紫杉醇", latin: "Paclitaxel", formula: "C₅₀H₅₃NO₁₇",
-    category: "补充高频", tag: "补充",
+    id: 19,
+    name: "紫杉醇",
+    latin: "Paclitaxel",
+    formula: "C₅₀H₅₃NO₁₇",
+    tag: "补充",
     chapter: "二萜",
     primary: "二萜",
     secondary: "二萜(紫杉烷类)",
-    activity: "抗癌（乳腺癌/卵巢癌），稳定微管"
+    activity: "抗癌（乳腺癌/卵巢癌），稳定微管",
+    pubchemName: "Paclitaxel"
   },
   {
-    id: 20, name: "利血平", latin: "Reserpine", formula: "C₃₃H₄₀N₂O₉",
-    category: "补充高频", tag: "补充",
+    id: 20,
+    name: "利血平",
+    latin: "Reserpine",
+    formula: "C₃₃H₄₀N₂O₉",
+    tag: "补充",
     chapter: "吲哚类生物碱",
     primary: "吲哚类",
     secondary: "吲哚类生物碱",
-    activity: "降压、镇静"
+    activity: "降压、镇静",
+    pubchemName: "Reserpine"
   },
   {
-    id: 21, name: "葛根素", latin: "Puerarin", formula: "C₂₁H₂₀O₉",
-    category: "补充高频", tag: "补充",
+    id: 21,
+    name: "葛根素",
+    latin: "Puerarin",
+    formula: "C₂₁H₂₀O₉",
+    tag: "补充",
     chapter: "异黄酮",
     primary: "黄酮",
     secondary: "异黄酮(碳苷)",
-    activity: "扩张冠脉、改善微循环"
+    activity: "扩张冠脉、改善微循环",
+    pubchemName: "Puerarin"
   },
   {
-    id: 22, name: "穿心莲内酯", latin: "Andrographolide", formula: "C₂₀H₃₀O₅",
-    category: "补充高频", tag: "补充",
+    id: 22,
+    name: "穿心莲内酯",
+    latin: "Andrographolide",
+    formula: "C₂₀H₃₀O₅",
+    tag: "补充",
     chapter: "二萜内酯",
     primary: "二萜",
     secondary: "二萜内酯",
-    activity: "清热解毒、抗炎"
+    activity: "清热解毒、抗炎",
+    pubchemName: "Andrographolide"
   },
   {
-    id: 23, name: "咖啡因", latin: "Caffeine", formula: "C₈H₁₀N₄O₂",
-    category: "补充高频", tag: "补充",
+    id: 23,
+    name: "咖啡因",
+    latin: "Caffeine",
+    formula: "C₈H₁₀N₄O₂",
+    tag: "补充",
     chapter: "嘌呤类生物碱",
     primary: "嘌呤类",
     secondary: "嘌呤类生物碱",
-    activity: "中枢兴奋、利尿"
+    activity: "中枢兴奋、利尿",
+    pubchemName: "Caffeine"
   },
   {
-    id: 24, name: "熊果酸", latin: "Ursolic acid", formula: "C₃₀H₄₈O₃",
-    category: "补充高频", tag: "补充",
+    id: 24,
+    name: "熊果酸",
+    latin: "Ursolic acid",
+    formula: "C₃₀H₄₈O₃",
+    tag: "补充",
     chapter: "三萜",
     primary: "三萜",
     secondary: "乌苏烷型三萜",
-    activity: "保肝、抗炎"
+    activity: "保肝、抗炎",
+    pubchemName: "Ursolic acid"
   }
 ];
 
-const ALL_CARDS = [...CARDS, ...SUPP_CARDS];
-
 // ===== State =====
-let currentCards = [...ALL_CARDS];
+let currentCards = [...CARDS];
 let currentIndex = 0;
 let isFlipped = false;
-let mode = 'structure'; // structure | reverse | random
 let activeFilter = 'all';
-let mastery = {}; // id -> 'know' | 'dont-know'
+let mastery = {};
 
 // Load mastery from localStorage
 try {
-  const saved = localStorage.getItem('flashcard-pharm-mastery');
-  if (saved) mastery = JSON.parse(saved);
+  mastery = JSON.parse(localStorage.getItem('flashcard-mastery') || '{}');
 } catch(e) {}
 
-// ===== Category colors =====
+// ===== Tag colors =====
 const TAG_COLORS = {
-  '黄酮': { bg: 'rgba(251,191,36,0.15)', border: 'rgba(251,191,36,0.3)', text: '#fbbf24' },
-  '香豆素': { bg: 'rgba(244,114,182,0.15)', border: 'rgba(244,114,182,0.3)', text: '#f472b6' },
-  '木脂素': { bg: 'rgba(163,130,248,0.15)', border: 'rgba(163,130,248,0.3)', text: '#a78bfa' },
-  '醌类': { bg: 'rgba(248,113,113,0.15)', border: 'rgba(248,113,113,0.3)', text: '#f87171' },
-  '萜类': { bg: 'rgba(52,211,153,0.15)', border: 'rgba(52,211,153,0.3)', text: '#34d399' },
-  '三萜': { bg: 'rgba(56,189,248,0.15)', border: 'rgba(56,189,248,0.3)', text: '#38bdf8' },
-  '甾体': { bg: 'rgba(251,146,60,0.15)', border: 'rgba(251,146,60,0.3)', text: '#fb923c' },
-  '生物碱': { bg: 'rgba(129,140,248,0.15)', border: 'rgba(129,140,248,0.3)', text: '#818cf8' },
-  '补充': { bg: 'rgba(148,163,184,0.15)', border: 'rgba(148,163,184,0.3)', text: '#94a3b8' }
+  '黄酮': { bg: 'rgba(251,191,36,0.1)', border: 'rgba(251,191,36,0.2)', text: '#fbbf24' },
+  '香豆素': { bg: 'rgba(244,114,182,0.1)', border: 'rgba(244,114,182,0.2)', text: '#f472b6' },
+  '木脂素': { bg: 'rgba(163,130,248,0.1)', border: 'rgba(163,130,248,0.2)', text: '#a78bfa' },
+  '醌类': { bg: 'rgba(248,113,113,0.1)', border: 'rgba(248,113,113,0.2)', text: '#f87171' },
+  '萜类': { bg: 'rgba(52,211,153,0.1)', border: 'rgba(52,211,153,0.2)', text: '#34d399' },
+  '三萜': { bg: 'rgba(56,189,248,0.1)', border: 'rgba(56,189,248,0.2)', text: '#38bdf8' },
+  '甾体': { bg: 'rgba(251,146,60,0.1)', border: 'rgba(251,146,60,0.2)', text: '#fb923c' },
+  '生物碱': { bg: 'rgba(129,140,248,0.1)', border: 'rgba(129,140,248,0.2)', text: '#818cf8' },
+  '补充': { bg: 'rgba(148,163,184,0.1)', border: 'rgba(148,163,184,0.2)', text: '#94a3b8' }
 };
+
+// ===== Get structure image URL =====
+function getStructureUrl(card) {
+  // Priority 1: Local ChemDraw image
+  const localUrl = `structures/${card.id}-${card.pubchemName.toLowerCase().replace(/\s+/g,'-')}.png`;
+  // Priority 2: PubChem API (fallback)
+  const pubchemUrl = `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${encodeURIComponent(card.pubchemName)}/PNG?image_size=400x300`;
+  return { local: localUrl, pubchem: pubchemUrl };
+}
 
 // ===== Init =====
 function init() {
@@ -740,7 +818,7 @@ function buildFilters() {
     '生物碱': '⚗️ 生物碱', '补充': '➕ 补充'
   };
   container.innerHTML = tags.map(t =>
-    `<button class="filter-btn${t === 'all' ? ' active' : ''}" onclick="applyFilter('${t}')">${labels[t]}</button>`
+    `<button class="filter-btn${t==='all'?' active':''}" onclick="applyFilter('${t}')">${labels[t]}</button>`
   ).join('');
 }
 
@@ -751,13 +829,7 @@ function applyFilter(tag) {
     btn.classList.toggle('active', tags[i] === tag);
   });
 
-  if (tag === 'all') {
-    currentCards = [...ALL_CARDS];
-  } else {
-    currentCards = ALL_CARDS.filter(c => c.tag === tag);
-  }
-
-  // Show special section only for 甾体
+  currentCards = tag === 'all' ? [...CARDS] : CARDS.filter(c => c.tag === tag);
   document.getElementById('specialSection').style.display = (tag === '甾体' || tag === 'all') ? 'block' : 'none';
 
   currentIndex = 0;
@@ -766,80 +838,72 @@ function applyFilter(tag) {
   updateProgress();
 }
 
-function setMode(m) {
-  mode = m;
-  document.querySelectorAll('.mode-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  if (m === 'random') {
-    shuffleCards();
-  }
-  isFlipped = false;
-  renderCard();
-}
-
 function shuffleCards() {
   for (let i = currentCards.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [currentCards[i], currentCards[j]] = [currentCards[j], currentCards[i]];
   }
   currentIndex = 0;
-  document.getElementById('cardWrapper').classList.add('shuffle-flash');
-  setTimeout(() => document.getElementById('cardWrapper').classList.remove('shuffle-flash'), 300);
+  isFlipped = false;
+  document.getElementById('cardWrapper').style.animation = 'none';
+  setTimeout(() => {
+    document.getElementById('cardWrapper').style.animation = 'fadeIn 0.25s ease';
+    renderCard();
+  }, 10);
 }
 
 // ===== Render =====
 function renderCard() {
   if (currentCards.length === 0) {
-    document.getElementById('cardFront').innerHTML = '<p style="color:var(--text-dim)">无卡片</p>';
+    document.getElementById('cardFront').innerHTML = '<p style="color:var(--text-dim);padding:2rem;text-align:center">无卡片</p>';
     document.getElementById('cardBack').innerHTML = '';
     return;
   }
 
   const card = currentCards[currentIndex];
   const tc = TAG_COLORS[card.tag] || TAG_COLORS['补充'];
+  const urls = getStructureUrl(card);
 
-  if (mode === 'reverse') {
-    // Reverse mode: front shows name + info, back shows structure description
-    document.getElementById('cardFront').innerHTML = `
-      <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
-      <span class="card-category" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}">${card.tag}</span>
-      <div class="card-name" style="color:${tc.text}">${card.name}</div>
-      <div class="card-latin">${card.latin}</div>
-      <div class="card-formula">${card.formula}</div>
-      <div style="margin-top:1rem;font-size:0.85rem;color:var(--text-dim)">所属：${card.chapter}</div>
-      <div class="card-hint">点击翻转 → 背结构类型</div>
-    `;
-    document.getElementById('cardBack').innerHTML = `
-      <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
-      <div class="back-label">一级结构（母核）</div>
-      <div class="back-value primary">${card.primary}</div>
-      <div class="back-label">二级结构 ★</div>
-      <div class="back-value secondary">${card.secondary}</div>
-      <div class="back-label">临床用途 / 活性</div>
-      <div class="back-value activity">${card.activity}</div>
-    `;
-  } else {
-    // Structure mode (default): front shows question, back shows answer
-    document.getElementById('cardFront').innerHTML = `
-      <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
-      <span class="card-category" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}">${card.tag}</span>
-      <div class="card-name" style="color:${tc.text}">${card.name}</div>
-      <div class="card-latin">${card.latin}</div>
-      <div class="card-formula">${card.formula}</div>
-      <div class="card-hint">点击翻转 → 查看答案</div>
-    `;
-    document.getElementById('cardBack').innerHTML = `
-      <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
-      <div class="back-label">所属章</div>
-      <div class="back-value chapter">${card.chapter}</div>
-      <div class="back-label">一级结构（母核）</div>
-      <div class="back-value primary">${card.primary}</div>
-      <div class="back-label">二级结构 ★</div>
-      <div class="back-value secondary">${card.secondary}</div>
-      <div class="back-label">临床用途 / 活性</div>
-      <div class="back-value activity">${card.activity}</div>
-    `;
-  }
+  // Front: Structure image (exam mode simulation)
+  document.getElementById('cardFront').innerHTML = `
+    <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
+    <span class="card-category" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}">${card.tag}</span>
+    <img class="structure-image"
+         src="${urls.local}"
+         onerror="this.onerror=null;this.src='${urls.pubchem}';this.style.maxHeight='280px'"
+         alt="${card.name} 结构式"
+         loading="lazy">
+    <div class="flip-hint">👆 点击翻转查看答案</div>
+  `;
+
+  // Back: Answer
+  const displayName = card.nameAlt ? `${card.name}（${card.nameAlt}）` : card.name;
+  document.getElementById('cardBack').innerHTML = `
+    <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
+    <div class="answer-section">
+      <div class="answer-label">① 俗名（中文常用名）</div>
+      <div class="answer-value name">${displayName}</div>
+      <div class="answer-value latin">${card.latin} · ${card.formula}</div>
+    </div>
+    <div class="answer-section">
+      <div class="answer-label">② 二级结构类型 ★</div>
+      <div class="answer-value secondary">${card.secondary}</div>
+    </div>
+    <div class="answer-section">
+      <div class="answer-label">③ 临床用途 / 活性</div>
+      <div class="answer-value activity">${card.activity}</div>
+    </div>
+    <div class="answer-grid">
+      <div class="answer-box">
+        <div class="answer-label">所属章</div>
+        <div class="answer-value">${card.chapter}</div>
+      </div>
+      <div class="answer-box">
+        <div class="answer-label">一级结构</div>
+        <div class="answer-value" style="font-size:0.85rem">${card.primary}</div>
+      </div>
+    </div>
+  `;
 
   document.getElementById('card').classList.toggle('flipped', isFlipped);
   document.getElementById('prevBtn').disabled = currentIndex === 0;
@@ -871,12 +935,9 @@ function markCard(status) {
   if (currentCards.length === 0) return;
   const card = currentCards[currentIndex];
   mastery[card.id] = status;
-  try { localStorage.setItem('flashcard-pharm-mastery', JSON.stringify(mastery)); } catch(e) {}
+  try { localStorage.setItem('flashcard-mastery', JSON.stringify(mastery)); } catch(e) {}
   updateProgress();
-  // Auto advance
-  if (currentIndex < currentCards.length - 1) {
-    nextCard();
-  }
+  if (currentIndex < currentCards.length - 1) nextCard();
 }
 
 function updateProgress() {
@@ -888,7 +949,7 @@ function updateProgress() {
 }
 
 // ===== Keyboard =====
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight') nextCard();
   else if (e.key === 'ArrowLeft') prevCard();
   else if (e.key === ' ') { e.preventDefault(); flipCard(); }
@@ -896,14 +957,12 @@ document.addEventListener('keydown', (e) => {
   else if (e.key === '2') markCard('know');
 });
 
-// ===== Touch swipe =====
+// ===== Touch =====
 let touchStartX = 0;
-document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX);
 document.addEventListener('touchend', e => {
   const diff = e.changedTouches[0].clientX - touchStartX;
-  if (Math.abs(diff) > 60) {
-    if (diff < 0) nextCard(); else prevCard();
-  }
+  if (Math.abs(diff) > 50) diff < 0 ? nextCard() : prevCard();
 });
 
 init();
