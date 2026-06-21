@@ -532,6 +532,334 @@
     display: block;
   }
   .flip-all-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ===== Adventure Mode ===== */
+  .adv-map {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  .adv-levels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    padding: 1rem 0;
+  }
+  .adv-level {
+    width: 110px;
+    height: 130px;
+    border-radius: 14px;
+    border: 2px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .adv-level.unlocked { border-color: var(--accent); }
+  .adv-level.unlocked:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 20px rgba(56,189,248,0.2);
+    border-color: var(--accent2);
+  }
+  .adv-level.locked {
+    opacity: 0.4;
+    cursor: not-allowed;
+    filter: grayscale(0.6);
+  }
+  .adv-level.cleared { border-color: var(--accent2); }
+  .adv-level .adv-icon { font-size: 2rem; margin-bottom: 0.3rem; }
+  .adv-level .adv-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .adv-level .adv-sub {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    margin-top: 0.15rem;
+  }
+  .adv-level .adv-star {
+    position: absolute;
+    top: 0.3rem; right: 0.4rem;
+    font-size: 0.65rem;
+    color: var(--warning);
+  }
+  .adv-level.cleared .adv-star { color: var(--warning); }
+  .adv-connector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--border);
+    font-size: 1.2rem;
+    width: 30px;
+  }
+  .adv-connector.active { color: var(--accent2); }
+
+  /* Quiz area */
+  .adv-quiz {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1rem;
+    animation: fadeIn 0.25s ease;
+  }
+  .adv-quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+  }
+  .adv-quiz-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .adv-quiz-progress {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+  }
+  .adv-quiz-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .adv-quiz-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    transition: width 0.3s;
+  }
+  .adv-question {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    margin-bottom: 0.8rem;
+    text-align: center;
+  }
+  .adv-question .q-label {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 0.4rem;
+  }
+  .adv-question .q-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .adv-question .q-img {
+    max-width: 200px;
+    max-height: 160px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 6px;
+    padding: 0.3rem;
+    margin: 0.5rem auto;
+    display: block;
+  }
+
+  /* Choice options */
+  .adv-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .adv-option {
+    padding: 0.7rem 0.8rem;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    line-height: 1.4;
+  }
+  .adv-option:hover { border-color: var(--accent); background: rgba(56,189,248,0.05); }
+  .adv-option.correct {
+    border-color: var(--accent2);
+    background: rgba(52,211,153,0.15);
+    color: var(--accent2);
+  }
+  .adv-option.wrong {
+    border-color: var(--danger);
+    background: rgba(248,113,113,0.1);
+    color: var(--danger);
+  }
+  .adv-option.reveal {
+    border-color: var(--accent2);
+    background: rgba(52,211,153,0.08);
+  }
+  .adv-option.disabled { pointer-events: none; opacity: 0.7; }
+  .adv-option img {
+    max-width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 4px;
+    padding: 0.15rem;
+    margin-bottom: 0.2rem;
+  }
+
+  /* Fill-in inputs */
+  .adv-fillin {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .adv-fillin-group {
+    margin-bottom: 0.7rem;
+  }
+  .adv-fillin-label {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+  }
+  .adv-fillin-input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    font-family: inherit;
+  }
+  .adv-fillin-input:focus { border-color: var(--accent); }
+  .adv-fillin-input.correct { border-color: var(--accent2); background: rgba(52,211,153,0.08); }
+  .adv-fillin-input.wrong { border-color: var(--danger); background: rgba(248,113,113,0.05); }
+  .adv-fillin-hint {
+    font-size: 0.65rem;
+    margin-top: 0.15rem;
+    min-height: 1rem;
+  }
+  .adv-fillin-hint.ok { color: var(--accent2); }
+  .adv-fillin-hint.no { color: var(--danger); }
+  .adv-submit-btn {
+    display: block;
+    margin: 0.8rem auto 0;
+    padding: 0.6rem 2rem;
+    border-radius: 20px;
+    border: 1.5px solid var(--accent);
+    background: rgba(56,189,248,0.1);
+    color: var(--accent);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .adv-submit-btn:hover { background: rgba(56,189,248,0.2); }
+
+  /* Result overlay */
+  .adv-result {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(15,23,42,0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: fadeIn 0.3s ease;
+  }
+  .adv-result-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+  }
+  .adv-result-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+  .adv-result-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+  }
+  .adv-result-title.pass { color: var(--accent2); }
+  .adv-result-title.fail { color: var(--danger); }
+  .adv-result-stats {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+    line-height: 1.8;
+  }
+  .adv-result-stars {
+    font-size: 1.5rem;
+    margin: 0.3rem 0 0.8rem;
+    color: var(--warning);
+    letter-spacing: 0.2rem;
+  }
+  .adv-result-btns {
+    display: flex;
+    gap: 0.6rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .adv-result-btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .adv-result-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .adv-result-btn.primary {
+    background: rgba(56,189,248,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* Back button */
+  .adv-back {
+    padding: 0.35rem 0.9rem;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .adv-back:hover { border-color: var(--accent); color: var(--text); }
+
+  /* Score display in quiz */
+  .adv-score {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.75rem;
+  }
+  .adv-score span { display: flex; align-items: center; gap: 0.25rem; }
+  .adv-score .score-correct { color: var(--accent2); }
+  .adv-score .score-wrong { color: var(--danger); }
+
+  @media (max-width: 500px) {
+    .adv-level { width: 90px; height: 110px; }
+    .adv-level .adv-icon { font-size: 1.5rem; }
+    .adv-level .adv-name { font-size: 0.65rem; }
+    .adv-options { grid-template-columns: 1fr; }
+    .adv-result-card { padding: 1.5rem; }
+  }
 </style>
 </head>
 <body>
@@ -550,6 +878,7 @@
 <div class="mode-toggle">
   <button class="mode-btn active" id="modeFlashcard" onclick="setViewMode('flashcard')">🃏 闪卡模式</button>
   <button class="mode-btn" id="modeGrid" onclick="setViewMode('grid')">📋 全部展示</button>
+  <button class="mode-btn" id="modeAdventure" onclick="setViewMode('adventure')">🎮 闯关模式</button>
 </div>
 
 <!-- Filters -->
@@ -593,6 +922,17 @@
 <div id="gridMode" style="display:none;">
   <button class="flip-all-btn" onclick="flipAllGrid()" id="flipAllBtn">🔄 全部翻转 / 全部翻回</button>
   <div class="grid-area" id="gridArea"></div>
+</div>
+
+<!-- Adventure Mode -->
+<div id="adventureMode" style="display:none;">
+  <div class="adv-map" id="advMap"></div>
+  <div class="adv-quiz" id="advQuiz" style="display:none;"></div>
+</div>
+
+<!-- Adventure Result Overlay -->
+<div class="adv-result" id="advResult" style="display:none;">
+  <div class="adv-result-card" id="advResultCard"></div>
 </div>
 
 <!-- Special Section -->
@@ -895,6 +1235,7 @@ function applyFilter(tag) {
   renderCard();
   updateProgress();
   if (viewMode === 'grid') renderGrid();
+  if (viewMode === 'adventure') renderAdvMap();
 }
 
 function shuffleCards() {
@@ -1029,13 +1370,22 @@ function setViewMode(mode) {
   viewMode = mode;
   document.getElementById('modeFlashcard').classList.toggle('active', mode === 'flashcard');
   document.getElementById('modeGrid').classList.toggle('active', mode === 'grid');
+  document.getElementById('modeAdventure').classList.toggle('active', mode === 'adventure');
   document.getElementById('flashcardMode').style.display = mode === 'flashcard' ? 'block' : 'none';
   document.getElementById('gridMode').style.display = mode === 'grid' ? 'block' : 'none';
+  document.getElementById('adventureMode').style.display = mode === 'adventure' ? 'block' : 'none';
   document.getElementById('progressArea').style.display = mode === 'flashcard' ? 'block' : 'none';
   document.getElementById('specialSection').style.display = (mode === 'flashcard' && (activeFilter === '甾体' || activeFilter === 'all')) ? 'block' : 'none';
   
   if (mode === 'grid') {
     renderGrid();
+  }
+  if (mode === 'adventure') {
+    // Reset to map view
+    document.getElementById('advMap').style.display = 'block';
+    document.getElementById('advQuiz').style.display = 'none';
+    document.getElementById('advResult').style.display = 'none';
+    renderAdvMap();
   }
 }
 
@@ -1096,6 +1446,477 @@ function flipAllGrid() {
   document.getElementById('flipAllBtn').textContent = 
     allFlipped ? '🔄 全部翻转查看答案' : '🔄 全部翻回看结构';
 }
+
+// ===== Adventure Mode =====
+const ADV_LEVELS = [
+  { id: 1, icon: '🏷️', name: '认识名字', desc: '给俗名→选结构图', type: 'choice' },
+  { id: 2, icon: '🧬', name: '认识结构类型', desc: '给二级结构→选俗名', type: 'choice' },
+  { id: 3, icon: '💊', name: '认识用途', desc: '给用途→选俗名', type: 'choice' },
+  { id: 4, icon: '🔗', name: '名字↔结构类型', desc: '给俗名→选二级结构', type: 'choice' },
+  { id: 5, icon: '🎯', name: '名字↔用途', desc: '给俗名→选用途', type: 'choice' },
+  { id: 6, icon: '🏆', name: '终极闯关', desc: '看结构→写全部答案', type: 'fillin' }
+];
+
+let advProgress = {};
+try {
+  advProgress = JSON.parse(localStorage.getItem('flashcard-adventure') || '{}');
+} catch(e) {}
+
+// Quiz state
+let advCurrentLevel = 0;
+let advQuestions = [];
+let advQIndex = 0;
+let advCorrect = 0;
+let advWrong = 0;
+let advAnswered = false;
+let advStartTime = 0;
+
+function isLevelUnlocked(levelId) {
+  if (levelId === 1) return true;
+  return !!advProgress[levelId - 1];
+}
+
+function isLevelCleared(levelId) {
+  return !!advProgress[levelId];
+}
+
+function getAdvStars(correct, total) {
+  const pct = total ? correct / total : 0;
+  if (pct >= 1) return '⭐⭐⭐';
+  if (pct >= 0.9) return '⭐⭐';
+  if (pct >= 0.8) return '⭐';
+  return '';
+}
+
+function renderAdvMap() {
+  const container = document.getElementById('advMap');
+  const filteredCount = currentCards.length;
+
+  let html = '<div class="adv-levels">';
+  ADV_LEVELS.forEach((lv, i) => {
+    const unlocked = isLevelUnlocked(lv.id);
+    const cleared = isLevelCleared(lv.id);
+    const cls = unlocked ? (cleared ? 'cleared' : 'unlocked') : 'locked';
+    const stars = advProgress[lv.id] ? advProgress[lv.id].stars : '';
+    const bestScore = advProgress[lv.id] ? `${advProgress[lv.id].correct}/${advProgress[lv.id].total}` : '';
+
+    html += `
+      <div class="adv-level ${cls}" onclick="${unlocked ? `startAdvLevel(${lv.id})` : ''}" title="${!unlocked ? '通过上一关解锁' : ''}">
+        ${stars ? `<span class="adv-star">${stars}</span>` : ''}
+        <span class="adv-icon">${lv.icon}</span>
+        <span class="adv-name">第${lv.id}关<br>${lv.name}</span>
+        <span class="adv-sub">${bestScore || (unlocked ? lv.desc : '🔒')}</span>
+      </div>
+    `;
+    if (i < ADV_LEVELS.length - 1) {
+      html += `<span class="adv-connector ${isLevelCleared(lv.id) ? 'active' : ''}">→</span>`;
+    }
+  });
+  html += '</div>';
+  html += `<div style="text-align:center;margin-top:0.5rem;">
+    <span style="font-size:0.7rem;color:var(--text-dim);">当前分类：${activeFilter === 'all' ? '全部' : activeFilter}（${filteredCount}个化合物） · 80%正确率过关</span>
+  </div>`;
+  container.innerHTML = html;
+}
+
+function startAdvLevel(levelId) {
+  advCurrentLevel = levelId;
+  advQIndex = 0;
+  advCorrect = 0;
+  advWrong = 0;
+  advAnswered = false;
+  advStartTime = Date.now();
+
+  // Generate questions
+  const lv = ADV_LEVELS[levelId - 1];
+  const pool = [...currentCards];
+
+  if (pool.length < 4) {
+    alert('当前分类至少需要4个化合物才能开始闯关，请选择更多分类');
+    return;
+  }
+
+  // Shuffle pool
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+
+  if (lv.type === 'choice') {
+    advQuestions = pool.map(card => generateChoiceQuestion(levelId, card, pool));
+  } else {
+    advQuestions = pool.map(card => ({ card, level: levelId }));
+  }
+
+  document.getElementById('advMap').style.display = 'none';
+  document.getElementById('advQuiz').style.display = 'block';
+  renderAdvQuestion();
+}
+
+function generateChoiceQuestion(levelId, correctCard, pool) {
+  // Get 3 wrong options from the same pool (prefer same tag)
+  let sameTag = pool.filter(c => c.id !== correctCard.id && c.tag === correctCard.tag);
+  let diffTag = pool.filter(c => c.id !== correctCard.id && c.tag !== correctCard.tag);
+
+  // Shuffle both
+  for (let arr of [sameTag, diffTag]) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+
+  let distractors = [...sameTag.slice(0, 3), ...diffTag].slice(0, 3);
+  // If not enough same-tag, fill from diff-tag
+  if (distractors.length < 3) {
+    distractors = [...sameTag, ...diffTag].slice(0, 3);
+  }
+
+  let options = [...distractors, correctCard];
+  // Shuffle options
+  for (let i = options.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+
+  return { card: correctCard, options, level: levelId };
+}
+
+function renderAdvQuestion() {
+  const container = document.getElementById('advQuiz');
+  const lv = ADV_LEVELS[advCurrentLevel - 1];
+  const q = advQuestions[advQIndex];
+  const card = q.card;
+  const total = advQuestions.length;
+  const pct = (advQIndex / total * 100).toFixed(0);
+
+  let html = `
+    <div class="adv-quiz-header">
+      <button class="adv-back" onclick="backToAdvMap()">← 返回</button>
+      <span class="adv-quiz-title">${lv.icon} 第${lv.id}关 · ${lv.name}</span>
+      <span class="adv-quiz-progress">${advQIndex + 1} / ${total}</span>
+    </div>
+    <div class="adv-score">
+      <span class="score-correct">✓ ${advCorrect}</span>
+      <span class="score-wrong">✗ ${advWrong}</span>
+    </div>
+    <div class="adv-quiz-bar"><div class="adv-quiz-bar-fill" style="width:${pct}%"></div></div>
+  `;
+
+  if (lv.type === 'choice') {
+    html += renderChoiceQuestion(q);
+  } else {
+    html += renderFillinQuestion(q);
+  }
+
+  container.innerHTML = html;
+
+  // Focus first input for fillin
+  if (lv.type === 'fillin') {
+    const firstInput = container.querySelector('.adv-fillin-input');
+    if (firstInput) firstInput.focus();
+  }
+}
+
+function renderChoiceQuestion(q) {
+  const lv = ADV_LEVELS[q.level - 1];
+  const card = q.card;
+  let questionContent = '';
+  let optionContent = '';
+
+  switch (q.level) {
+    case 1: // 给俗名→选结构图
+      const displayName1 = card.nameAlt ? `${card.name}（${card.nameAlt}）` : card.name;
+      questionContent = `<div class="q-label">这个化合物的结构式是？</div><div class="q-text">${displayName1}</div>`;
+      optionContent = q.options.map((opt, i) =>
+        `<div class="adv-option" data-id="${opt.id}" onclick="checkChoice(${opt.id}, ${card.id})">
+          <img src="${getStructureUrl(opt)}" alt="${opt.name}">
+          <div>${opt.name}</div>
+        </div>`
+      ).join('');
+      break;
+    case 2: // 给二级结构名→选俗名
+      questionContent = `<div class="q-label">哪个化合物属于这个结构类型？</div><div class="q-text">${card.secondary}</div>`;
+      optionContent = q.options.map((opt, i) => {
+        const dn = opt.nameAlt ? `${opt.name}（${opt.nameAlt}）` : opt.name;
+        return `<div class="adv-option" data-id="${opt.id}" onclick="checkChoice(${opt.id}, ${card.id})">${dn}</div>`;
+      }).join('');
+      break;
+    case 3: // 给用途→选俗名
+      questionContent = `<div class="q-label">哪个化合物有这个用途？</div><div class="q-text">${card.activity}</div>`;
+      optionContent = q.options.map((opt, i) => {
+        const dn = opt.nameAlt ? `${opt.name}（${opt.nameAlt}）` : opt.name;
+        return `<div class="adv-option" data-id="${opt.id}" onclick="checkChoice(${opt.id}, ${card.id})">${dn}</div>`;
+      }).join('');
+      break;
+    case 4: // 给俗名→选二级结构
+      const displayName4 = card.nameAlt ? `${card.name}（${card.nameAlt}）` : card.name;
+      questionContent = `<div class="q-label">${displayName4} 的二级结构类型是？</div>`;
+      optionContent = q.options.map((opt, i) =>
+        `<div class="adv-option" data-secondary="${opt.secondary}" onclick="checkChoiceSecondary('${opt.secondary.replace(/'/g, "\\'")}', '${card.secondary.replace(/'/g, "\\'")}')">${opt.secondary}</div>`
+      ).join('');
+      break;
+    case 5: // 给俗名→选用途
+      const displayName5 = card.nameAlt ? `${card.name}（${card.nameAlt}）` : card.name;
+      questionContent = `<div class="q-label">${displayName5} 的临床用途/活性是？</div>`;
+      optionContent = q.options.map((opt, i) =>
+        `<div class="adv-option" data-activity="${opt.activity}" onclick="checkChoiceActivity(this, '${card.id}')">${opt.activity}</div>`
+      ).join('');
+      break;
+  }
+
+  return `
+    <div class="adv-question">${questionContent}</div>
+    <div class="adv-options">${optionContent}</div>
+  `;
+}
+
+function renderFillinQuestion(q) {
+  const card = q.card;
+  const imgSrc = getStructureUrl(card);
+  return `
+    <div class="adv-question">
+      <div class="q-label">看结构图，写出完整答案</div>
+      <img class="q-img" src="${imgSrc}" alt="结构式">
+    </div>
+    <div class="adv-fillin">
+      <div class="adv-fillin-group">
+        <div class="adv-fillin-label">① 俗名</div>
+        <input class="adv-fillin-input" id="fillName" placeholder="输入化合物名称" autocomplete="off">
+        <div class="adv-fillin-hint" id="hintName"></div>
+      </div>
+      <div class="adv-fillin-group">
+        <div class="adv-fillin-label">② 二级结构类型</div>
+        <input class="adv-fillin-input" id="fillSecondary" placeholder="如：黄酮醇、强心苷" autocomplete="off">
+        <div class="adv-fillin-hint" id="hintSecondary"></div>
+      </div>
+      <div class="adv-fillin-group">
+        <div class="adv-fillin-label">③ 临床用途/活性</div>
+        <input class="adv-fillin-input" id="fillActivity" placeholder="如：抗疟、强心、保肝" autocomplete="off">
+        <div class="adv-fillin-hint" id="hintActivity"></div>
+      </div>
+      <button class="adv-submit-btn" onclick="checkFillin(${card.id})">提交答案</button>
+    </div>
+  `;
+}
+
+// ===== Choice answer checking =====
+function checkChoice(selectedId, correctId) {
+  if (advAnswered) return;
+  advAnswered = true;
+
+  const isCorrect = selectedId === correctId;
+  if (isCorrect) advCorrect++; else advWrong++;
+
+  // Highlight options
+  document.querySelectorAll('.adv-option').forEach(el => {
+    const elId = parseInt(el.dataset.id);
+    el.classList.add('disabled');
+    if (elId === correctId) el.classList.add('correct');
+    else if (elId === selectedId && !isCorrect) el.classList.add('wrong');
+  });
+
+  setTimeout(() => {
+    advAnswered = false;
+    nextAdvQuestion();
+  }, 800);
+}
+
+function checkChoiceSecondary(selected, correct) {
+  if (advAnswered) return;
+  advAnswered = true;
+
+  const isCorrect = selected === correct;
+  if (isCorrect) advCorrect++; else advWrong++;
+
+  document.querySelectorAll('.adv-option').forEach(el => {
+    const elSec = el.dataset.secondary;
+    el.classList.add('disabled');
+    if (elSec === correct) el.classList.add('correct');
+    else if (elSec === selected && !isCorrect) el.classList.add('wrong');
+  });
+
+  setTimeout(() => {
+    advAnswered = false;
+    nextAdvQuestion();
+  }, 800);
+}
+
+function checkChoiceActivity(el, correctCardId) {
+  if (advAnswered) return;
+  advAnswered = true;
+
+  const card = advQuestions[advQIndex].card;
+  const selectedActivity = el.dataset.activity;
+  const isCorrect = selectedActivity === card.activity;
+  if (isCorrect) advCorrect++; else advWrong++;
+
+  document.querySelectorAll('.adv-option').forEach(opt => {
+    opt.classList.add('disabled');
+    if (opt.dataset.activity === card.activity) opt.classList.add('correct');
+    else if (opt === el && !isCorrect) opt.classList.add('wrong');
+  });
+
+  setTimeout(() => {
+    advAnswered = false;
+    nextAdvQuestion();
+  }, 800);
+}
+
+// ===== Fillin answer checking =====
+function checkFillin(cardId) {
+  if (advAnswered) return;
+  advAnswered = true;
+
+  const card = CARDS.find(c => c.id === cardId);
+  const nameInput = document.getElementById('fillName');
+  const secInput = document.getElementById('fillSecondary');
+  const actInput = document.getElementById('fillActivity');
+
+  let nameOk = checkNameMatch(nameInput.value.trim(), card);
+  let secOk = checkSecondaryMatch(secInput.value.trim(), card.secondary);
+  let actOk = checkActivityMatch(actInput.value.trim(), card.activity);
+
+  // Apply visual feedback
+  nameInput.classList.add(nameOk ? 'correct' : 'wrong');
+  secInput.classList.add(secOk ? 'correct' : 'wrong');
+  actInput.classList.add(actOk ? 'correct' : 'wrong');
+
+  document.getElementById('hintName').textContent = nameOk ? '✓ 正确' : `✗ 正确答案：${card.name}${card.nameAlt ? '（' + card.nameAlt + '）' : ''}`;
+  document.getElementById('hintName').className = `adv-fillin-hint ${nameOk ? 'ok' : 'no'}`;
+  document.getElementById('hintSecondary').textContent = secOk ? '✓ 正确' : `✗ 正确答案：${card.secondary}`;
+  document.getElementById('hintSecondary').className = `adv-fillin-hint ${secOk ? 'ok' : 'no'}`;
+  document.getElementById('hintActivity').textContent = actOk ? '✓ 正确' : `✗ 正确答案：${card.activity}`;
+  document.getElementById('hintActivity').className = `adv-fillin-hint ${actOk ? 'ok' : 'no'}`;
+
+  // Count as correct if at least name is right (partial credit)
+  let score = (nameOk ? 1 : 0) + (secOk ? 1 : 0) + (actOk ? 1 : 0);
+  if (score >= 2) advCorrect++; else advWrong++;
+
+  setTimeout(() => {
+    advAnswered = false;
+    nextAdvQuestion();
+  }, 1500);
+}
+
+function checkNameMatch(input, card) {
+  if (!input) return false;
+  const lower = input.toLowerCase();
+  if (card.name === input || lower === card.name.toLowerCase()) return true;
+  if (card.nameAlt && (card.nameAlt === input || lower === card.nameAlt.toLowerCase())) return true;
+  // Partial match: if input contains the name or name contains input (len >= 2)
+  if (input.length >= 2 && (card.name.includes(input) || input.includes(card.name))) return true;
+  if (card.nameAlt && input.length >= 2 && (card.nameAlt.includes(input) || input.includes(card.nameAlt))) return true;
+  return false;
+}
+
+function checkSecondaryMatch(input, correct) {
+  if (!input) return false;
+  // Remove parentheses content for matching
+  const clean = s => s.replace(/[（）()]/g, '').replace(/[类型]/g, '');
+  const inputClean = clean(input);
+  const correctClean = clean(correct);
+  if (input === correct || inputClean === correctClean) return true;
+  // Keyword match: if input contains key parts
+  if (input.length >= 2 && correctClean.includes(inputClean)) return true;
+  if (inputClean.length >= 2 && inputClean.includes(correctClean)) return true;
+  return false;
+}
+
+function checkActivityMatch(input, correct) {
+  if (!input) return false;
+  // Activity is a comma-separated list of keywords
+  const keywords = correct.split(/[、，,；;]/).map(s => s.trim()).filter(s => s.length > 0);
+  // Check if at least one keyword is matched
+  let matched = 0;
+  for (const kw of keywords) {
+    if (kw.length >= 2 && (input.includes(kw) || kw.includes(input))) {
+      matched++;
+    }
+  }
+  // Pass if matched at least half of keywords or at least 1 key keyword
+  return matched > 0;
+}
+
+function nextAdvQuestion() {
+  advQIndex++;
+  if (advQIndex >= advQuestions.length) {
+    finishAdvLevel();
+  } else {
+    renderAdvQuestion();
+  }
+}
+
+function finishAdvLevel() {
+  const total = advQuestions.length;
+  const pct = total ? advCorrect / total : 0;
+  const passed = pct >= 0.8;
+  const elapsed = Math.round((Date.now() - advStartTime) / 1000);
+  const mins = Math.floor(elapsed / 60);
+  const secs = elapsed % 60;
+  const stars = getAdvStars(advCorrect, total);
+
+  if (passed && !advProgress[advCurrentLevel]) {
+    // First time clearing
+  }
+  if (passed) {
+    // Update best score
+    const prev = advProgress[advCurrentLevel];
+    if (!prev || advCorrect > prev.correct) {
+      advProgress[advCurrentLevel] = { correct: advCorrect, total, stars };
+    }
+    try { localStorage.setItem('flashcard-adventure', JSON.stringify(advProgress)); } catch(e) {}
+  }
+
+  // Show result
+  const resultCard = document.getElementById('advResultCard');
+  resultCard.innerHTML = `
+    <div class="adv-result-icon">${passed ? '🎉' : '💪'}</div>
+    <div class="adv-result-title ${passed ? 'pass' : 'fail'}">${passed ? '闯关成功！' : '再接再厉！'}</div>
+    <div class="adv-result-stars">${passed ? stars : ''}</div>
+    <div class="adv-result-stats">
+      正确：${advCorrect} / ${total}（${Math.round(pct * 100)}%）<br>
+      用时：${mins}分${secs}秒
+      ${!passed ? '<br>需要 80% 正确率才能过关' : ''}
+    </div>
+    <div class="adv-result-btns">
+      <button class="adv-result-btn" onclick="backToAdvMap()">返回地图</button>
+      <button class="adv-result-btn" onclick="retryAdvLevel()">重新挑战</button>
+      ${passed && advCurrentLevel < 6 ? `<button class="adv-result-btn primary" onclick="goNextLevel()">下一关 →</button>` : ''}
+    </div>
+  `;
+  document.getElementById('advResult').style.display = 'flex';
+}
+
+function backToAdvMap() {
+  document.getElementById('advResult').style.display = 'none';
+  document.getElementById('advQuiz').style.display = 'none';
+  document.getElementById('advMap').style.display = 'block';
+  renderAdvMap();
+}
+
+function retryAdvLevel() {
+  document.getElementById('advResult').style.display = 'none';
+  startAdvLevel(advCurrentLevel);
+}
+
+function goNextLevel() {
+  document.getElementById('advResult').style.display = 'none';
+  if (advCurrentLevel < 6) {
+    startAdvLevel(advCurrentLevel + 1);
+  }
+}
+
+// Keyboard for adventure fillin
+document.addEventListener('keydown', e => {
+  if (viewMode !== 'adventure') return;
+  if (document.getElementById('advQuiz').style.display === 'none') return;
+  const lv = ADV_LEVELS[advCurrentLevel - 1];
+  if (lv.type === 'fillin' && e.key === 'Enter') {
+    e.preventDefault();
+    checkFillin(advQuestions[advQIndex].card.id);
+  }
+});
 
 init();
 </script>
