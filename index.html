@@ -211,6 +211,18 @@
     color: var(--text-dim);
     opacity: 0.5;
   }
+  .card-tip {
+    font-size: 0.75rem;
+    color: var(--accent2);
+    background: rgba(52,211,153,0.08);
+    border: 1px solid rgba(52,211,153,0.15);
+    border-radius: 6px;
+    padding: 0.3rem 0.6rem;
+    margin-top: 0.4rem;
+    line-height: 1.5;
+    text-align: left;
+    max-width: 100%;
+  }
 
   /* Back content */
   .answer-section {
@@ -478,168 +490,192 @@ const CARDS = [
     name: "芦丁", nameAlt: "芸香苷", latin: "Rutin", formula: "C₂₇H₃₀O₁₆",
     tag: "黄酮", chapter: "糖和苷 / 黄酮",
     primary: "黄酮（C6-C3-C6）", secondary: "黄酮(醇)苷",
-    activity: "降低毛细血管通透性、维持血管韧性、防治脆性出血"
+    activity: "降低毛细血管通透性、维持血管韧性、防治脆性出血",
+    tip: "🔍 识别：黄酮骨架(两个苯环+中间吡喃酮) + 糖基(鼠李糖+葡萄糖)"
   },
   {
     id: 2, cid: 5281416, img: "02-esculetin.png",
     name: "秦皮乙素", nameAlt: "七叶内酯", latin: "Esculetin", formula: "C₉H₆O₄",
     tag: "香豆素", chapter: "香豆素",
     primary: "香豆素（苯并α-吡喃酮）", secondary: "简单香豆素",
-    activity: "抗菌、抗炎（秦皮抗菌有效成分）"
+    activity: "抗菌、抗炎（秦皮抗菌有效成分）",
+    tip: "🔍 识别：苯环并六元内酯环(α-吡喃酮) + 两个相邻酚羟基(6,7位)"
   },
   {
     id: 3, cid: 3001664, img: "03-schisandrin.png",
     name: "五味子醇甲", latin: "Schisandrin", formula: "C₂₄H₃₂O₇",
     tag: "木脂素", chapter: "木脂素",
     primary: "联苯环辛烯", secondary: "联苯环辛烯类木脂素",
-    activity: "保肝、降转氨酶、镇静"
+    activity: "保肝、降转氨酶、镇静",
+    tip: "🔍 识别：两个苯环通过八元环连接(联苯环辛烯) + 多个甲氧基"
   },
   {
     id: 4, cid: 3220, img: "04-emodin.png",
     name: "大黄素", latin: "Emodin", formula: "C₁₅H₁₀O₅",
     tag: "醌类", chapter: "醌类 · 蒽醌",
     primary: "蒽醌（三环线性稠合）", secondary: "羟基蒽醌",
-    activity: "泻下、抗菌"
+    activity: "泻下、抗菌",
+    tip: "🔍 识别：三个六元环排成一条直线(蒽醌骨架) + 多个酚羟基"
   },
   {
     id: 5, cid: 164676, img: "05-tanshinone-iia.png",
     name: "丹参酮ⅡA", latin: "Tanshinone IIA", formula: "C₁₉H₁₈O₃",
     tag: "醌类", chapter: "醌类 · 菲醌",
     primary: "菲醌（菲核邻醌）", secondary: "菲醌(邻醌)",
-    activity: "活血化瘀、扩张冠脉、抗心肌缺血"
+    activity: "活血化瘀、扩张冠脉、抗心肌缺血",
+    tip: "🔍 识别：菲醌骨架(三个稠合环) + 醌结构(邻位两个C=O) + 呋喃环"
   },
   {
     id: 6, cid: 5280343, img: "06-quercetin.png",
     name: "槲皮素", latin: "Quercetin", formula: "C₁₅H₁₀O₇",
     tag: "黄酮", chapter: "黄酮类",
     primary: "黄酮（C6-C3-C6）", secondary: "黄酮醇",
-    activity: "抗氧化、扩张冠脉、降血脂"
+    activity: "抗氧化、扩张冠脉、降血脂",
+    tip: "🔍 识别：典型黄酮骨架 + 3位有羟基(黄酮醇特征) + 多个酚羟基"
   },
   {
     id: 7, cid: 68827, img: "07-artemisinin.png",
     name: "青蒿素", latin: "Artemisinin", formula: "C₁₅H₂₂O₅",
     tag: "萜类", chapter: "萜类 / 挥发油",
     primary: "倍半萜（C₁₅）", secondary: "倍半萜内酯(过氧化物)",
-    activity: "抗疟（屠呦呦获诺贝尔奖）"
+    activity: "抗疟（屠呦呦获诺贝尔奖）",
+    tip: "🔍 识别：⚠️ 过氧桥(O-O)是灵魂！抗疟关键结构 + 内酯环"
   },
   {
     id: 8, cid: 1254, img: "08-menthol.png",
     name: "薄荷醇", nameAlt: "薄荷脑", latin: "Menthol", formula: "C₁₀H₂₀O",
     tag: "萜类", chapter: "单萜 / 挥发油",
     primary: "单萜（C₁₀）", secondary: "环状单萜(醇)",
-    activity: "局部清凉、止痛止痒、抗菌"
+    activity: "局部清凉、止痛止痒、抗菌",
+    tip: "🔍 识别：简单的六元环 + 一个羟基 + 三个甲基(异丙基)"
   },
   {
     id: 9, cid: 10494, img: "09-oleanolic-acid.png",
     name: "齐墩果酸", latin: "Oleanolic acid", formula: "C₃₀H₄₈O₃",
     tag: "三萜", chapter: "三萜 · 五环",
     primary: "五环三萜", secondary: "五环三萜(齐墩果烷型)",
-    activity: "保肝、降转氨酶"
+    activity: "保肝、降转氨酶",
+    tip: "🔍 识别：五个稠合六元环(稠密结构) + 一个羧基(COOH)"
   },
   {
     id: 10, cid: 9898279, img: "10-ginsenoside-rb1.png",
     name: "人参皂苷Rb1", latin: "Ginsenoside Rb1", formula: "C₅₄H₉₂O₂₃",
     tag: "三萜", chapter: "三萜 · 四环",
     primary: "四环三萜", secondary: "四环三萜(达玛烷型)皂苷",
-    activity: "大补元气、抗疲劳、调节免疫"
+    activity: "大补元气、抗疲劳、调节免疫",
+    tip: "🔍 识别：达玛烷型四环骨架 + 两条糖链(多个葡萄糖)"
   },
   {
     id: 11, cid: 14982, img: "11-glycyrrhizic-acid.png",
     name: "甘草酸", nameAlt: "甘草甜素", latin: "Glycyrrhizic acid", formula: "C₄₂H₆₂O₁₆",
     tag: "三萜", chapter: "三萜皂苷 · 甘草",
     primary: "五环三萜", secondary: "齐墩果烷型三萜皂苷",
-    activity: "抗炎、抗溃疡、调节免疫、解毒"
+    activity: "抗炎、抗溃疡、调节免疫、解毒",
+    tip: "🔍 识别：三萜苷元 + 两个葡萄糖醛酸糖链(双糖)"
   },
   {
     id: 12, cid: 2724385, img: "12-digoxin.png",
     name: "地高辛", latin: "Digoxin", formula: "C₄₁H₆₄O₁₄",
     tag: "甾体", chapter: "甾体 · 强心苷",
     primary: "甾体（环戊烷多氢菲）", secondary: "强心苷",
-    activity: "强心、治疗充血性心力衰竭"
+    activity: "强心、治疗充血性心力衰竭",
+    tip: "🔍 识别：甾体骨架(四个环) + 五元内酯环(C17) + 三分子糖"
   },
   {
     id: 13, cid: 99474, img: "13-diosgenin.png",
     name: "薯蓣皂苷元", latin: "Diosgenin", formula: "C₂₇H₄₂O₃",
     tag: "甾体", chapter: "甾体皂苷",
     primary: "甾体（环戊烷多氢菲）", secondary: "甾体皂苷(螺甾烷醇型)",
-    activity: "合成甾体激素原料；祛痰、抗菌"
+    activity: "合成甾体激素原料；祛痰、抗菌",
+    tip: "🔍 识别：⚠️ 螺缩酮结构(螺原子连接两个环)是关键特征！"
   },
   {
     id: 14, cid: 2353, img: "14-berberine.png",
     name: "小檗碱", nameAlt: "黄连素", latin: "Berberine", formula: "C₂₀H₁₈NO₄⁺",
     tag: "生物碱", chapter: "生物碱 · 异喹啉",
     primary: "异喹啉（苯并吡啶）", secondary: "异喹啉类生物碱(原小檗碱型)",
-    activity: "抗菌、抗炎、治肠道感染/痢疾"
+    activity: "抗菌、抗炎、治肠道感染/痢疾",
+    tip: "🔍 识别：⚠️ 黄色季铵盐！四个稠合环 + 两个甲氧基"
   },
   {
     id: 15, cid: 24360, img: "15-camptothecin.png",
     name: "喜树碱", latin: "Camptothecin", formula: "C₂₀H₁₆N₂O₄",
     tag: "生物碱", chapter: "生物碱 · 喹啉",
     primary: "喹啉（苯并吡啶）", secondary: "喹啉类生物碱",
-    activity: "细胞毒/抗癌（抑制拓扑异构酶I）"
+    activity: "细胞毒/抗癌（抑制拓扑异构酶I）",
+    tip: "🔍 识别：五环稠合结构 + 内酯环(E环) + 喹啉母核"
   },
   {
     id: 16, cid: 9294, img: "16-ephedrine.png",
     name: "麻黄碱", latin: "Ephedrine", formula: "C₁₀H₁₅NO",
     tag: "生物碱", chapter: "生物碱 · 有机胺",
     primary: "苯丙胺", secondary: "有机胺类生物碱",
-    activity: "平喘、解痉、收缩血管/升压"
+    activity: "平喘、解痉、收缩血管/升压",
+    tip: "🔍 识别：小分子！苯环 + 二甲氨基 + 羟基(苯丙胺骨架)"
   },
   {
     id: 17, cid: 5288826, img: "17-morphine.png",
     name: "吗啡", latin: "Morphine", formula: "C₁₇H₁₉NO₃",
     tag: "生物碱", chapter: "生物碱 · 吗啡烷",
     primary: "吗啡烷（菲核五环稠合）", secondary: "吗啡烷类生物碱",
-    activity: "强效镇痛；具酸碱两性"
+    activity: "强效镇痛；具酸碱两性",
+    tip: "🔍 识别：⚠️ 五环(A-E) + 氧桥(4,5位) + 酚羟基(3位) + 醇羟基(6位)"
   },
   {
     id: 18, cid: 174174, img: "18-atropine.png",
     name: "莨菪碱", nameAlt: "阿托品", latin: "Atropine", formula: "C₁₇H₂₃NO₃",
     tag: "生物碱", chapter: "生物碱 · 莨菪烷",
     primary: "莨菪烷（托烷母核）", secondary: "莨菪烷类生物碱",
-    activity: "解痉、散瞳、抑制腺体分泌"
+    activity: "解痉、散瞳、抑制腺体分泌",
+    tip: "🔍 识别：⚠️ 托烷骨架(双环桥结构) + 酯键连接苯乙酸"
   },
   {
     id: 19, cid: 36314, img: "19-paclitaxel.png",
     name: "紫杉醇", latin: "Paclitaxel", formula: "C₅₀H₅₃NO₁₇",
     tag: "补充", chapter: "二萜",
     primary: "二萜", secondary: "二萜(紫杉烷类)",
-    activity: "抗癌（乳腺癌/卵巢癌），稳定微管"
+    activity: "抗癌（乳腺癌/卵巢癌），稳定微管",
+    tip: "🔍 识别：大分子！紫杉烷骨架 + 苯异丝氨酸侧链 + 四元氧杂环"
   },
   {
     id: 20, cid: 5770, img: "20-reserpine.png",
     name: "利血平", latin: "Reserpine", formula: "C₃₃H₄₀N₂O₉",
     tag: "补充", chapter: "吲哚类生物碱",
     primary: "吲哚类", secondary: "吲哚类生物碱",
-    activity: "降压、镇静"
+    activity: "降压、镇静",
+    tip: "🔍 识别：复杂结构！吲哚母核 + 三个甲氧基 + 三甲氧基苯甲酰基"
   },
   {
     id: 21, cid: 5281807, img: "21-puerarin.png",
     name: "葛根素", latin: "Puerarin", formula: "C₂₁H₂₀O₉",
     tag: "补充", chapter: "异黄酮",
     primary: "黄酮", secondary: "异黄酮(碳苷)",
-    activity: "扩张冠脉、改善微循环"
+    activity: "扩张冠脉、改善微循环",
+    tip: "🔍 识别：⚠️ 碳苷！葡萄糖直接连在黄酮骨架上(C-C键，非O-糖苷)"
   },
   {
     id: 22, cid: 5318517, img: "22-andrographolide.png",
     name: "穿心莲内酯", latin: "Andrographolide", formula: "C₂₀H₃₀O₅",
     tag: "补充", chapter: "二萜内酯",
     primary: "二萜", secondary: "二萜内酯",
-    activity: "清热解毒、抗炎"
+    activity: "清热解毒、抗炎",
+    tip: "🔍 识别：二萜骨架 + γ-内酯环(五元) + 两个双键 + 羟基"
   },
   {
     id: 23, cid: 2519, img: "23-caffeine.png",
     name: "咖啡因", latin: "Caffeine", formula: "C₈H₁₀N₄O₂",
     tag: "补充", chapter: "嘌呤类生物碱",
     primary: "嘌呤类", secondary: "嘌呤类生物碱",
-    activity: "中枢兴奋、利尿"
+    activity: "中枢兴奋、利尿",
+    tip: "🔍 识别：⚠️ 嘌呤骨架(两个稠合环) + 三个甲基(1,3,7位)"
   },
   {
     id: 24, cid: 64945, img: "24-ursolic-acid.png",
     name: "熊果酸", latin: "Ursolic acid", formula: "C₃₀H₄₈O₃",
     tag: "补充", chapter: "三萜",
     primary: "三萜", secondary: "乌苏烷型三萜",
-    activity: "保肝、抗炎"
+    activity: "保肝、抗炎",
+    tip: "🔍 识别：五环三萜骨架 + 羧基 + 双键(与齐墩果酸区别：甲基位置不同)"
   }
 ];
 
@@ -735,11 +771,12 @@ function renderCard() {
   const tc = TAG_COLORS[card.tag] || TAG_COLORS['补充'];
   const imgSrc = getStructureUrl(card);
 
-  // Front: Structure image (exam mode simulation)
+  // Front: Structure image + identification tip
   document.getElementById('cardFront').innerHTML = `
     <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
     <span class="card-category" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}">${card.tag}</span>
     <img class="structure-image" src="${imgSrc}" alt="${card.name} 结构式" loading="lazy">
+    <div class="card-tip">${card.tip}</div>
     <div class="flip-hint">👆 点击翻转查看答案</div>
   `;
 
