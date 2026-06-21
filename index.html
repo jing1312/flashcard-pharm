@@ -469,303 +469,177 @@
 
 <script>
 // ===== Flashcard Data =====
-// PubChem 2D structure URL: https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/{name}/PNG
+// PubChem CID 直链加载 2D 结构图（比名称查询更稳定）
 // 本地图片优先：structures/{id}-{name}.png
 
 const CARDS = [
   {
-    id: 1,
-    name: "芦丁",
-    nameAlt: "芸香苷",
-    latin: "Rutin",
-    formula: "C₂₇H₃₀O₁₆",
-    tag: "黄酮",
-    chapter: "糖和苷 / 黄酮",
-    primary: "黄酮（C6-C3-C6）",
-    secondary: "黄酮(醇)苷",
-    activity: "降低毛细血管通透性、维持血管韧性、防治脆性出血",
-    pubchemName: "Rutin"
+    id: 1, cid: 5280805,
+    name: "芦丁", nameAlt: "芸香苷", latin: "Rutin", formula: "C₂₇H₃₀O₁₆",
+    tag: "黄酮", chapter: "糖和苷 / 黄酮",
+    primary: "黄酮（C6-C3-C6）", secondary: "黄酮(醇)苷",
+    activity: "降低毛细血管通透性、维持血管韧性、防治脆性出血"
   },
   {
-    id: 2,
-    name: "秦皮乙素",
-    nameAlt: "七叶内酯",
-    latin: "Esculetin",
-    formula: "C₉H₆O₄",
-    tag: "香豆素",
-    chapter: "香豆素",
-    primary: "香豆素（苯并α-吡喃酮）",
-    secondary: "简单香豆素",
-    activity: "抗菌、抗炎（秦皮抗菌有效成分）",
-    pubchemName: "Esculetin"
+    id: 2, cid: 5281416,
+    name: "秦皮乙素", nameAlt: "七叶内酯", latin: "Esculetin", formula: "C₉H₆O₄",
+    tag: "香豆素", chapter: "香豆素",
+    primary: "香豆素（苯并α-吡喃酮）", secondary: "简单香豆素",
+    activity: "抗菌、抗炎（秦皮抗菌有效成分）"
   },
   {
-    id: 3,
-    name: "五味子醇甲",
-    latin: "Schisandrin",
-    formula: "C₂₄H₃₂O₇",
-    tag: "木脂素",
-    chapter: "木脂素",
-    primary: "联苯环辛烯",
-    secondary: "联苯环辛烯类木脂素",
-    activity: "保肝、降转氨酶、镇静",
-    pubchemName: "Schisandrin"
+    id: 3, cid: 3001664,
+    name: "五味子醇甲", latin: "Schisandrin", formula: "C₂₄H₃₂O₇",
+    tag: "木脂素", chapter: "木脂素",
+    primary: "联苯环辛烯", secondary: "联苯环辛烯类木脂素",
+    activity: "保肝、降转氨酶、镇静"
   },
   {
-    id: 4,
-    name: "大黄素",
-    latin: "Emodin",
-    formula: "C₁₅H₁₀O₅",
-    tag: "醌类",
-    chapter: "醌类 · 蒽醌",
-    primary: "蒽醌（三环线性稠合）",
-    secondary: "羟基蒽醌",
-    activity: "泻下、抗菌",
-    pubchemName: "Emodin"
+    id: 4, cid: 3220,
+    name: "大黄素", latin: "Emodin", formula: "C₁₅H₁₀O₅",
+    tag: "醌类", chapter: "醌类 · 蒽醌",
+    primary: "蒽醌（三环线性稠合）", secondary: "羟基蒽醌",
+    activity: "泻下、抗菌"
   },
   {
-    id: 5,
-    name: "丹参酮ⅡA",
-    latin: "Tanshinone IIA",
-    formula: "C₁₉H₁₈O₃",
-    tag: "醌类",
-    chapter: "醌类 · 菲醌",
-    primary: "菲醌（菲核邻醌）",
-    secondary: "菲醌(邻醌)",
-    activity: "活血化瘀、扩张冠脉、抗心肌缺血",
-    pubchemName: "Tanshinone IIA"
+    id: 5, cid: 164676,
+    name: "丹参酮ⅡA", latin: "Tanshinone IIA", formula: "C₁₉H₁₈O₃",
+    tag: "醌类", chapter: "醌类 · 菲醌",
+    primary: "菲醌（菲核邻醌）", secondary: "菲醌(邻醌)",
+    activity: "活血化瘀、扩张冠脉、抗心肌缺血"
   },
   {
-    id: 6,
-    name: "槲皮素",
-    latin: "Quercetin",
-    formula: "C₁₅H₁₀O₇",
-    tag: "黄酮",
-    chapter: "黄酮类",
-    primary: "黄酮（C6-C3-C6）",
-    secondary: "黄酮醇",
-    activity: "抗氧化、扩张冠脉、降血脂",
-    pubchemName: "Quercetin"
+    id: 6, cid: 5280343,
+    name: "槲皮素", latin: "Quercetin", formula: "C₁₅H₁₀O₇",
+    tag: "黄酮", chapter: "黄酮类",
+    primary: "黄酮（C6-C3-C6）", secondary: "黄酮醇",
+    activity: "抗氧化、扩张冠脉、降血脂"
   },
   {
-    id: 7,
-    name: "青蒿素",
-    latin: "Artemisinin",
-    formula: "C₁₅H₂₂O₅",
-    tag: "萜类",
-    chapter: "萜类 / 挥发油",
-    primary: "倍半萜（C₁₅）",
-    secondary: "倍半萜内酯(过氧化物)",
-    activity: "抗疟（屠呦呦获诺贝尔奖）",
-    pubchemName: "Artemisinin"
+    id: 7, cid: 68827,
+    name: "青蒿素", latin: "Artemisinin", formula: "C₁₅H₂₂O₅",
+    tag: "萜类", chapter: "萜类 / 挥发油",
+    primary: "倍半萜（C₁₅）", secondary: "倍半萜内酯(过氧化物)",
+    activity: "抗疟（屠呦呦获诺贝尔奖）"
   },
   {
-    id: 8,
-    name: "薄荷醇",
-    nameAlt: "薄荷脑",
-    latin: "Menthol",
-    formula: "C₁₀H₂₀O",
-    tag: "萜类",
-    chapter: "单萜 / 挥发油",
-    primary: "单萜（C₁₀）",
-    secondary: "环状单萜(醇)",
-    activity: "局部清凉、止痛止痒、抗菌",
-    pubchemName: "Menthol"
+    id: 8, cid: 1254,
+    name: "薄荷醇", nameAlt: "薄荷脑", latin: "Menthol", formula: "C₁₀H₂₀O",
+    tag: "萜类", chapter: "单萜 / 挥发油",
+    primary: "单萜（C₁₀）", secondary: "环状单萜(醇)",
+    activity: "局部清凉、止痛止痒、抗菌"
   },
   {
-    id: 9,
-    name: "齐墩果酸",
-    latin: "Oleanolic acid",
-    formula: "C₃₀H₄₈O₃",
-    tag: "三萜",
-    chapter: "三萜 · 五环",
-    primary: "五环三萜",
-    secondary: "五环三萜(齐墩果烷型)",
-    activity: "保肝、降转氨酶",
-    pubchemName: "Oleanolic acid"
+    id: 9, cid: 10494,
+    name: "齐墩果酸", latin: "Oleanolic acid", formula: "C₃₀H₄₈O₃",
+    tag: "三萜", chapter: "三萜 · 五环",
+    primary: "五环三萜", secondary: "五环三萜(齐墩果烷型)",
+    activity: "保肝、降转氨酶"
   },
   {
-    id: 10,
-    name: "人参皂苷Rb1",
-    latin: "Ginsenoside Rb1",
-    formula: "C₅₄H₉₂O₂₃",
-    tag: "三萜",
-    chapter: "三萜 · 四环",
-    primary: "四环三萜",
-    secondary: "四环三萜(达玛烷型)皂苷",
-    activity: "大补元气、抗疲劳、调节免疫",
-    pubchemName: "Ginsenoside Rb1"
+    id: 10, cid: 9898279,
+    name: "人参皂苷Rb1", latin: "Ginsenoside Rb1", formula: "C₅₄H₉₂O₂₃",
+    tag: "三萜", chapter: "三萜 · 四环",
+    primary: "四环三萜", secondary: "四环三萜(达玛烷型)皂苷",
+    activity: "大补元气、抗疲劳、调节免疫"
   },
   {
-    id: 11,
-    name: "甘草酸",
-    nameAlt: "甘草甜素",
-    latin: "Glycyrrhizic acid",
-    formula: "C₄₂H₆₂O₁₆",
-    tag: "三萜",
-    chapter: "三萜皂苷 · 甘草",
-    primary: "五环三萜",
-    secondary: "齐墩果烷型三萜皂苷",
-    activity: "抗炎、抗溃疡、调节免疫、解毒",
-    pubchemName: "Glycyrrhizic acid"
+    id: 11, cid: 14982,
+    name: "甘草酸", nameAlt: "甘草甜素", latin: "Glycyrrhizic acid", formula: "C₄₂H₆₂O₁₆",
+    tag: "三萜", chapter: "三萜皂苷 · 甘草",
+    primary: "五环三萜", secondary: "齐墩果烷型三萜皂苷",
+    activity: "抗炎、抗溃疡、调节免疫、解毒"
   },
   {
-    id: 12,
-    name: "地高辛",
-    latin: "Digoxin",
-    formula: "C₄₁H₆₄O₁₄",
-    tag: "甾体",
-    chapter: "甾体 · 强心苷",
-    primary: "甾体（环戊烷多氢菲）",
-    secondary: "强心苷",
-    activity: "强心、治疗充血性心力衰竭",
-    pubchemName: "Digoxin"
+    id: 12, cid: 2724385,
+    name: "地高辛", latin: "Digoxin", formula: "C₄₁H₆₄O₁₄",
+    tag: "甾体", chapter: "甾体 · 强心苷",
+    primary: "甾体（环戊烷多氢菲）", secondary: "强心苷",
+    activity: "强心、治疗充血性心力衰竭"
   },
   {
-    id: 13,
-    name: "薯蓣皂苷元",
-    latin: "Diosgenin",
-    formula: "C₂₇H₄₂O₃",
-    tag: "甾体",
-    chapter: "甾体皂苷",
-    primary: "甾体（环戊烷多氢菲）",
-    secondary: "甾体皂苷(螺甾烷醇型)",
-    activity: "合成甾体激素原料；祛痰、抗菌",
-    pubchemName: "Diosgenin"
+    id: 13, cid: 99474,
+    name: "薯蓣皂苷元", latin: "Diosgenin", formula: "C₂₇H₄₂O₃",
+    tag: "甾体", chapter: "甾体皂苷",
+    primary: "甾体（环戊烷多氢菲）", secondary: "甾体皂苷(螺甾烷醇型)",
+    activity: "合成甾体激素原料；祛痰、抗菌"
   },
   {
-    id: 14,
-    name: "小檗碱",
-    nameAlt: "黄连素",
-    latin: "Berberine",
-    formula: "C₂₀H₁₈NO₄⁺",
-    tag: "生物碱",
-    chapter: "生物碱 · 异喹啉",
-    primary: "异喹啉（苯并吡啶）",
-    secondary: "异喹啉类生物碱(原小檗碱型)",
-    activity: "抗菌、抗炎、治肠道感染/痢疾",
-    pubchemName: "Berberine"
+    id: 14, cid: 2353,
+    name: "小檗碱", nameAlt: "黄连素", latin: "Berberine", formula: "C₂₀H₁₈NO₄⁺",
+    tag: "生物碱", chapter: "生物碱 · 异喹啉",
+    primary: "异喹啉（苯并吡啶）", secondary: "异喹啉类生物碱(原小檗碱型)",
+    activity: "抗菌、抗炎、治肠道感染/痢疾"
   },
   {
-    id: 15,
-    name: "喜树碱",
-    latin: "Camptothecin",
-    formula: "C₂₀H₁₆N₂O₄",
-    tag: "生物碱",
-    chapter: "生物碱 · 喹啉",
-    primary: "喹啉（苯并吡啶）",
-    secondary: "喹啉类生物碱",
-    activity: "细胞毒/抗癌（抑制拓扑异构酶I）",
-    pubchemName: "Camptothecin"
+    id: 15, cid: 24360,
+    name: "喜树碱", latin: "Camptothecin", formula: "C₂₀H₁₆N₂O₄",
+    tag: "生物碱", chapter: "生物碱 · 喹啉",
+    primary: "喹啉（苯并吡啶）", secondary: "喹啉类生物碱",
+    activity: "细胞毒/抗癌（抑制拓扑异构酶I）"
   },
   {
-    id: 16,
-    name: "麻黄碱",
-    latin: "Ephedrine",
-    formula: "C₁₀H₁₅NO",
-    tag: "生物碱",
-    chapter: "生物碱 · 有机胺",
-    primary: "苯丙胺",
-    secondary: "有机胺类生物碱",
-    activity: "平喘、解痉、收缩血管/升压",
-    pubchemName: "Ephedrine"
+    id: 16, cid: 9294,
+    name: "麻黄碱", latin: "Ephedrine", formula: "C₁₀H₁₅NO",
+    tag: "生物碱", chapter: "生物碱 · 有机胺",
+    primary: "苯丙胺", secondary: "有机胺类生物碱",
+    activity: "平喘、解痉、收缩血管/升压"
   },
   {
-    id: 17,
-    name: "吗啡",
-    latin: "Morphine",
-    formula: "C₁₇H₁₉NO₃",
-    tag: "生物碱",
-    chapter: "生物碱 · 吗啡烷",
-    primary: "吗啡烷（菲核五环稠合）",
-    secondary: "吗啡烷类生物碱",
-    activity: "强效镇痛；具酸碱两性",
-    pubchemName: "Morphine"
+    id: 17, cid: 5288826,
+    name: "吗啡", latin: "Morphine", formula: "C₁₇H₁₉NO₃",
+    tag: "生物碱", chapter: "生物碱 · 吗啡烷",
+    primary: "吗啡烷（菲核五环稠合）", secondary: "吗啡烷类生物碱",
+    activity: "强效镇痛；具酸碱两性"
   },
   {
-    id: 18,
-    name: "莨菪碱",
-    nameAlt: "阿托品",
-    latin: "Atropine",
-    formula: "C₁₇H₂₃NO₃",
-    tag: "生物碱",
-    chapter: "生物碱 · 莨菪烷",
-    primary: "莨菪烷（托烷母核）",
-    secondary: "莨菪烷类生物碱",
-    activity: "解痉、散瞳、抑制腺体分泌",
-    pubchemName: "Atropine"
+    id: 18, cid: 174174,
+    name: "莨菪碱", nameAlt: "阿托品", latin: "Atropine", formula: "C₁₇H₂₃NO₃",
+    tag: "生物碱", chapter: "生物碱 · 莨菪烷",
+    primary: "莨菪烷（托烷母核）", secondary: "莨菪烷类生物碱",
+    activity: "解痉、散瞳、抑制腺体分泌"
   },
   {
-    id: 19,
-    name: "紫杉醇",
-    latin: "Paclitaxel",
-    formula: "C₅₀H₅₃NO₁₇",
-    tag: "补充",
-    chapter: "二萜",
-    primary: "二萜",
-    secondary: "二萜(紫杉烷类)",
-    activity: "抗癌（乳腺癌/卵巢癌），稳定微管",
-    pubchemName: "Paclitaxel"
+    id: 19, cid: 36314,
+    name: "紫杉醇", latin: "Paclitaxel", formula: "C₅₀H₅₃NO₁₇",
+    tag: "补充", chapter: "二萜",
+    primary: "二萜", secondary: "二萜(紫杉烷类)",
+    activity: "抗癌（乳腺癌/卵巢癌），稳定微管"
   },
   {
-    id: 20,
-    name: "利血平",
-    latin: "Reserpine",
-    formula: "C₃₃H₄₀N₂O₉",
-    tag: "补充",
-    chapter: "吲哚类生物碱",
-    primary: "吲哚类",
-    secondary: "吲哚类生物碱",
-    activity: "降压、镇静",
-    pubchemName: "Reserpine"
+    id: 20, cid: 5770,
+    name: "利血平", latin: "Reserpine", formula: "C₃₃H₄₀N₂O₉",
+    tag: "补充", chapter: "吲哚类生物碱",
+    primary: "吲哚类", secondary: "吲哚类生物碱",
+    activity: "降压、镇静"
   },
   {
-    id: 21,
-    name: "葛根素",
-    latin: "Puerarin",
-    formula: "C₂₁H₂₀O₉",
-    tag: "补充",
-    chapter: "异黄酮",
-    primary: "黄酮",
-    secondary: "异黄酮(碳苷)",
-    activity: "扩张冠脉、改善微循环",
-    pubchemName: "Puerarin"
+    id: 21, cid: 5281807,
+    name: "葛根素", latin: "Puerarin", formula: "C₂₁H₂₀O₉",
+    tag: "补充", chapter: "异黄酮",
+    primary: "黄酮", secondary: "异黄酮(碳苷)",
+    activity: "扩张冠脉、改善微循环"
   },
   {
-    id: 22,
-    name: "穿心莲内酯",
-    latin: "Andrographolide",
-    formula: "C₂₀H₃₀O₅",
-    tag: "补充",
-    chapter: "二萜内酯",
-    primary: "二萜",
-    secondary: "二萜内酯",
-    activity: "清热解毒、抗炎",
-    pubchemName: "Andrographolide"
+    id: 22, cid: 5318517,
+    name: "穿心莲内酯", latin: "Andrographolide", formula: "C₂₀H₃₀O₅",
+    tag: "补充", chapter: "二萜内酯",
+    primary: "二萜", secondary: "二萜内酯",
+    activity: "清热解毒、抗炎"
   },
   {
-    id: 23,
-    name: "咖啡因",
-    latin: "Caffeine",
-    formula: "C₈H₁₀N₄O₂",
-    tag: "补充",
-    chapter: "嘌呤类生物碱",
-    primary: "嘌呤类",
-    secondary: "嘌呤类生物碱",
-    activity: "中枢兴奋、利尿",
-    pubchemName: "Caffeine"
+    id: 23, cid: 2519,
+    name: "咖啡因", latin: "Caffeine", formula: "C₈H₁₀N₄O₂",
+    tag: "补充", chapter: "嘌呤类生物碱",
+    primary: "嘌呤类", secondary: "嘌呤类生物碱",
+    activity: "中枢兴奋、利尿"
   },
   {
-    id: 24,
-    name: "熊果酸",
-    latin: "Ursolic acid",
-    formula: "C₃₀H₄₈O₃",
-    tag: "补充",
-    chapter: "三萜",
-    primary: "三萜",
-    secondary: "乌苏烷型三萜",
-    activity: "保肝、抗炎",
-    pubchemName: "Ursolic acid"
+    id: 24, cid: 64945,
+    name: "熊果酸", latin: "Ursolic acid", formula: "C₃₀H₄₈O₃",
+    tag: "补充", chapter: "三萜",
+    primary: "三萜", secondary: "乌苏烷型三萜",
+    activity: "保肝、抗炎"
   }
 ];
 
@@ -797,9 +671,10 @@ const TAG_COLORS = {
 // ===== Get structure image URL =====
 function getStructureUrl(card) {
   // Priority 1: Local ChemDraw image
-  const localUrl = `structures/${card.id}-${card.pubchemName.toLowerCase().replace(/\s+/g,'-')}.png`;
-  // Priority 2: PubChem API (fallback)
-  const pubchemUrl = `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/name/${encodeURIComponent(card.pubchemName)}/PNG?image_size=400x300`;
+  const safeName = card.latin.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  const localUrl = `structures/${card.id}-${safeName}.png`;
+  // Priority 2: PubChem CID (fast & reliable)
+  const pubchemUrl = `https://pubchem.ncbi.nlm.nih.gov/image/imgsrv.fcgi?cid=${card.cid}&t=l`;
   return { local: localUrl, pubchem: pubchemUrl };
 }
 
