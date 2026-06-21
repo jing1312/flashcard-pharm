@@ -397,6 +397,171 @@
     to { opacity: 1; transform: translateY(0); }
   }
   .card-wrapper { animation: fadeIn 0.25s ease; }
+
+  /* ===== Mode Toggle ===== */
+  .mode-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem 0;
+  }
+  .mode-btn {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .mode-btn:hover { border-color: var(--accent); color: var(--text); }
+  .mode-btn.active {
+    background: rgba(56,189,248,0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ===== Grid View ===== */
+  .grid-area {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+  .grid-card {
+    perspective: 800px;
+    height: 380px;
+    cursor: pointer;
+  }
+  .grid-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .grid-card.flipped .grid-card-inner {
+    transform: rotateY(180deg);
+  }
+  .grid-card-front, .grid-card-back {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .grid-card-front {
+    background: var(--card-front);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem;
+  }
+  .grid-card-back {
+    background: var(--card-back);
+    transform: rotateY(180deg);
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .grid-card .grid-img {
+    max-width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 5px;
+    padding: 0.3rem;
+  }
+  .grid-card .grid-tip {
+    font-size: 0.68rem;
+    color: var(--accent2);
+    background: rgba(52,211,153,0.08);
+    border: 1px solid rgba(52,211,153,0.12);
+    border-radius: 5px;
+    padding: 0.2rem 0.4rem;
+    margin-top: 0.3rem;
+    line-height: 1.4;
+    text-align: left;
+  }
+  .grid-card .grid-number {
+    position: absolute;
+    top: 0.4rem; left: 0.6rem;
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .grid-card .grid-tag {
+    position: absolute;
+    top: 0.4rem; right: 0.6rem;
+    font-size: 0.55rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
+  }
+  .grid-card .grid-flip-hint {
+    font-size: 0.6rem;
+    color: var(--text-dim);
+    opacity: 0.4;
+    margin-top: 0.2rem;
+  }
+  .grid-card .grid-answer-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.1rem;
+  }
+  .grid-card .grid-answer-latin {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-style: italic;
+  }
+  .grid-card .grid-answer-secondary {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent2);
+    padding: 0.2rem 0.5rem;
+    background: rgba(52,211,153,0.1);
+    border-radius: 5px;
+    border: 1px solid rgba(52,211,153,0.12);
+    display: inline-block;
+    margin: 0.3rem 0;
+  }
+  .grid-card .grid-answer-activity {
+    font-size: 0.75rem;
+    color: var(--warning);
+  }
+  .grid-card .grid-answer-label {
+    font-size: 0.55rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.3rem;
+  }
+  .grid-card .grid-answer-chapter {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+  }
+
+  /* Flip All button */
+  .flip-all-btn {
+    padding: 0.4rem 1.2rem;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin: 0.5rem auto;
+    display: block;
+  }
+  .flip-all-btn:hover { border-color: var(--accent); color: var(--accent); }
 </style>
 </head>
 <body>
@@ -411,38 +576,53 @@
   </div>
 </div>
 
+<!-- Mode Toggle -->
+<div class="mode-toggle">
+  <button class="mode-btn active" id="modeFlashcard" onclick="setViewMode('flashcard')">🃏 闪卡模式</button>
+  <button class="mode-btn" id="modeGrid" onclick="setViewMode('grid')">📋 全部展示</button>
+</div>
+
 <!-- Filters -->
 <div class="controls" id="filters"></div>
 
 <!-- Progress -->
-<div class="progress-area">
+<div class="progress-area" id="progressArea">
   <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
   <div class="progress-text" id="progressText">0 / 0 已掌握</div>
 </div>
 
-<!-- Card -->
-<div class="card-area">
-  <div class="card-wrapper" id="cardWrapper">
-    <div class="card" id="card" onclick="flipCard()">
-      <div class="card-face card-front" id="cardFront"></div>
-      <div class="card-face card-back" id="cardBack"></div>
+<!-- Flashcard Mode -->
+<div id="flashcardMode">
+  <!-- Card -->
+  <div class="card-area">
+    <div class="card-wrapper" id="cardWrapper">
+      <div class="card" id="card" onclick="flipCard()">
+        <div class="card-face card-front" id="cardFront"></div>
+        <div class="card-face card-back" id="cardBack"></div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- Navigation -->
-<div class="nav-area">
-  <button class="nav-btn" onclick="prevCard()" id="prevBtn">◀</button>
-  <div class="mastery-btns">
-    <button class="mastery-btn dont-know" onclick="markCard('dont-know')">✗ 不会</button>
-    <button class="mastery-btn know" onclick="markCard('know')">✓ 会了</button>
+  <!-- Navigation -->
+  <div class="nav-area">
+    <button class="nav-btn" onclick="prevCard()" id="prevBtn">◀</button>
+    <div class="mastery-btns">
+      <button class="mastery-btn dont-know" onclick="markCard('dont-know')">✗ 不会</button>
+      <button class="mastery-btn know" onclick="markCard('know')">✓ 会了</button>
+    </div>
+    <button class="nav-btn" onclick="nextCard()" id="nextBtn">▶</button>
+    <button class="nav-btn" onclick="shuffleCards()" title="随机排序">🔀</button>
   </div>
-  <button class="nav-btn" onclick="nextCard()" id="nextBtn">▶</button>
-  <button class="nav-btn" onclick="shuffleCards()" title="随机排序">🔀</button>
+
+  <div class="keyboard-hint">
+    <kbd>←</kbd> 上一张 &nbsp; <kbd>→</kbd> 下一张 &nbsp; <kbd>Space</kbd> 翻转 &nbsp; <kbd>1</kbd> 不会 &nbsp; <kbd>2</kbd> 会了
+  </div>
 </div>
 
-<div class="keyboard-hint">
-  <kbd>←</kbd> 上一张 &nbsp; <kbd>→</kbd> 下一张 &nbsp; <kbd>Space</kbd> 翻转 &nbsp; <kbd>1</kbd> 不会 &nbsp; <kbd>2</kbd> 会了
+<!-- Grid Mode -->
+<div id="gridMode" style="display:none;">
+  <button class="flip-all-btn" onclick="flipAllGrid()" id="flipAllBtn">🔄 全部翻转 / 全部翻回</button>
+  <div class="grid-area" id="gridArea"></div>
 </div>
 
 <!-- Special Section -->
@@ -741,8 +921,10 @@ function applyFilter(tag) {
 
   currentIndex = 0;
   isFlipped = false;
+  gridFlipped = {};
   renderCard();
   updateProgress();
+  if (viewMode === 'grid') renderGrid();
 }
 
 function shuffleCards() {
@@ -868,6 +1050,87 @@ document.addEventListener('touchend', e => {
   const diff = e.changedTouches[0].clientX - touchStartX;
   if (Math.abs(diff) > 50) diff < 0 ? nextCard() : prevCard();
 });
+
+// ===== View Mode =====
+let viewMode = 'flashcard'; // 'flashcard' | 'grid'
+let gridFlipped = {}; // track which cards are flipped in grid mode
+
+function setViewMode(mode) {
+  viewMode = mode;
+  document.getElementById('modeFlashcard').classList.toggle('active', mode === 'flashcard');
+  document.getElementById('modeGrid').classList.toggle('active', mode === 'grid');
+  document.getElementById('flashcardMode').style.display = mode === 'flashcard' ? 'block' : 'none';
+  document.getElementById('gridMode').style.display = mode === 'grid' ? 'block' : 'none';
+  document.getElementById('progressArea').style.display = mode === 'flashcard' ? 'block' : 'none';
+  document.getElementById('specialSection').style.display = (mode === 'flashcard' && (activeFilter === '甾体' || activeFilter === 'all')) ? 'block' : 'none';
+  
+  if (mode === 'grid') {
+    renderGrid();
+  }
+}
+
+function renderGrid() {
+  const container = document.getElementById('gridArea');
+  container.innerHTML = currentCards.map((card, i) => {
+    const tc = TAG_COLORS[card.tag] || TAG_COLORS['补充'];
+    const imgSrc = getStructureUrl(card);
+    const isFlipped = gridFlipped[card.id];
+    const displayName = card.nameAlt ? `${card.name}（${card.nameAlt}）` : card.name;
+    
+    return `
+      <div class="grid-card ${isFlipped ? 'flipped' : ''}" id="gridCard-${card.id}" onclick="flipGridCard(${card.id})">
+        <div class="grid-card-inner">
+          <div class="grid-card-front">
+            <span class="grid-number">${i + 1}. ${card.name}</span>
+            <span class="grid-tag" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}">${card.tag}</span>
+            <img class="grid-img" src="${imgSrc}" alt="${card.name}" loading="lazy">
+            <div class="grid-tip">${card.tip}</div>
+            <div class="grid-flip-hint">点击翻转</div>
+          </div>
+          <div class="grid-card-back">
+            <span class="grid-number">${i + 1}. ${card.name}</span>
+            <div class="grid-answer-name">${displayName}</div>
+            <div class="grid-answer-latin">${card.latin}</div>
+            <div class="grid-answer-label">② 二级结构类型</div>
+            <div class="grid-answer-secondary">${card.secondary}</div>
+            <div class="grid-answer-label">③ 临床用途 / 活性</div>
+            <div class="grid-answer-activity">${card.activity}</div>
+            <div class="grid-answer-label">所属章</div>
+            <div class="grid-answer-chapter">${card.chapter}</div>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function flipGridCard(cardId) {
+  const cardEl = document.getElementById(`gridCard-${cardId}`);
+  const isFlipped = cardEl.classList.contains('flipped');
+  cardEl.classList.toggle('flipped');
+  gridFlipped[cardId] = !isFlipped;
+}
+
+function flipAllGrid() {
+  const allFlipped = Object.keys(gridFlipped).length === currentCards.length && 
+                     Object.values(gridFlipped).every(v => v);
+  
+  currentCards.forEach(card => {
+    const cardEl = document.getElementById(`gridCard-${card.id}`);
+    if (cardEl) {
+      if (allFlipped) {
+        cardEl.classList.remove('flipped');
+        gridFlipped[card.id] = false;
+      } else {
+        cardEl.classList.add('flipped');
+        gridFlipped[card.id] = true;
+      }
+    }
+  });
+  
+  document.getElementById('flipAllBtn').textContent = 
+    allFlipped ? '🔄 全部翻转查看答案' : '🔄 全部翻回看结构';
+}
 
 init();
 </script>
