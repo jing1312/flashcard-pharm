@@ -533,6 +533,37 @@
   }
   .flip-all-btn:hover { border-color: var(--accent); color: var(--accent); }
 
+  /* ===== Structure Version Toggle ===== */
+  .ver-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem 0.3rem;
+    flex-wrap: wrap;
+  }
+  .ver-label {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+  }
+  .ver-btn {
+    padding: 0.35rem 0.7rem;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ver-btn:hover { border-color: var(--accent); color: var(--text); }
+  .ver-btn.active {
+    border-color: var(--accent2);
+    background: rgba(52,211,153,0.1);
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
   /* ===== Adventure Mode ===== */
   .adv-map {
     max-width: 800px;
@@ -884,6 +915,14 @@
   <button class="mode-btn" id="modeAdventure" onclick="setViewMode('adventure')">🎮 闯关模式</button>
 </div>
 
+<!-- Structure Version Toggle -->
+<div class="ver-toggle">
+  <span class="ver-label">结构图风格：</span>
+  <button class="ver-btn active" id="verBtn1" onclick="setStructureVersion(1)">A · PubChem</button>
+  <button class="ver-btn" id="verBtn2" onclick="setStructureVersion(2)">B · OpenBabel</button>
+  <button class="ver-btn" id="verBtn3" onclick="setStructureVersion(3)">C · CDK</button>
+</div>
+
 <!-- Filters -->
 <div class="controls" id="filters"></div>
 
@@ -1199,8 +1238,26 @@ const TAG_COLORS = {
 
 // ===== Get structure image URL =====
 // 所有结构图已预下载到本地，即时加载无需网络
+// 3个版本来源不同，风格各异，帮助适应考试不同风格的结构图
+// v1: PubChem 2D（默认） | v2: NIH CACTUS obabel | v3: NIH CACTUS CDK
+let structureVersion = 1;
+
 function getStructureUrl(card) {
+  if (structureVersion === 2) return `structures-v2/${card.img}`;
+  if (structureVersion === 3) return `structures-v3/${card.img}`;
   return `structures/${card.img}`;
+}
+
+function setStructureVersion(v) {
+  structureVersion = v;
+  document.querySelectorAll('.ver-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`verBtn${v}`).classList.add('active');
+  if (viewMode === 'flashcard') renderCard();
+  if (viewMode === 'grid') renderGrid();
+  if (viewMode === 'adventure') {
+    if (document.getElementById('advQuiz').style.display !== 'none') renderAdvQuestion();
+    else renderAdvMap();
+  }
 }
 
 // ===== Init =====
