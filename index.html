@@ -533,36 +533,57 @@
   }
   .flip-all-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  /* ===== Structure Version Toggle ===== */
-  .ver-toggle {
+  /* ===== Card Favorite ===== */
+  .fav-btn {
+    position: absolute;
+    top: 0.5rem; right: 0.6rem;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-dim);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1rem 0.3rem;
-    flex-wrap: wrap;
   }
-  .ver-label {
-    font-size: 0.72rem;
+  .fav-btn:hover { color: var(--warning); transform: scale(1.15); }
+  .fav-btn.faved { color: var(--warning); }
+  .grid-fav-btn {
+    position: absolute;
+    top: 0.3rem; right: 0.4rem;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(15,23,42,0.6);
     color: var(--text-dim);
-  }
-  .ver-btn {
-    padding: 0.35rem 0.7rem;
-    border-radius: 14px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    color: var(--text-dim);
-    font-size: 0.7rem;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: all 0.2s;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .ver-btn:hover { border-color: var(--accent); color: var(--text); }
-  .ver-btn.active {
-    border-color: var(--accent2);
-    background: rgba(52,211,153,0.1);
-    color: var(--accent2);
-    font-weight: 600;
+  .grid-fav-btn:hover { color: var(--warning); }
+  .grid-fav-btn.faved { color: var(--warning); }
+
+  /* ===== Other Style Links ===== */
+  .style-links {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--text-dim);
   }
+  .style-links a {
+    color: var(--accent);
+    text-decoration: none;
+    margin: 0 0.4rem;
+  }
+  .style-links a:hover { text-decoration: underline; }
 
   /* ===== Adventure Mode ===== */
   .adv-map {
@@ -915,14 +936,6 @@
   <button class="mode-btn" id="modeAdventure" onclick="setViewMode('adventure')">🎮 闯关模式</button>
 </div>
 
-<!-- Structure Version Toggle -->
-<div class="ver-toggle">
-  <span class="ver-label">结构图风格：</span>
-  <button class="ver-btn active" id="verBtn1" onclick="setStructureVersion(1)">A · PubChem</button>
-  <button class="ver-btn" id="verBtn2" onclick="setStructureVersion(2)">B · RDKit</button>
-  <button class="ver-btn" id="verBtn3" onclick="setStructureVersion(3)">C · 无立体</button>
-</div>
-
 <!-- Filters -->
 <div class="controls" id="filters"></div>
 
@@ -1236,28 +1249,59 @@ const TAG_COLORS = {
   '补充': { bg: 'rgba(148,163,184,0.1)', border: 'rgba(148,163,184,0.2)', text: '#94a3b8' }
 };
 
-// ===== Get structure image URL =====
-// 所有结构图已预下载到本地，即时加载无需网络
-// 3个版本来源不同，风格各异，帮助适应考试不同风格的结构图
-// v1: PubChem 2D（默认） | v2: RDKit风格（接近ChemDraw） | v3: 无立体标记简化版（黑白2D，无楔形键/虚线）
-let structureVersion = 1;
+// ===== Favorites =====
+let favorites = {};
+try {
+  favorites = JSON.parse(localStorage.getItem('flashcard-favorites') || '{}');
+} catch(e) {}
 
+function toggleFavorite(cardId) {
+  favorites[cardId] = !favorites[cardId];
+  if (!favorites[cardId]) delete favorites[cardId];
+  try { localStorage.setItem('flashcard-favorites', JSON.stringify(favorites)); } catch(e) {}
+  // Update UI
+  updateFavButtons(cardId);
+  // If currently filtering by favorites, refresh list
+  if (activeFilter === 'fav') {
+    applyFilter('fav');
+  } else {
+    updateFavCount();
+  }
+}
+
+function updateFavButtons(cardId) {
+  const isFaved = favorites[cardId];
+  document.querySelectorAll(`.fav-btn[data-id="${cardId}"], .grid-fav-btn[data-id="${cardId}"]`).forEach(btn => {
+    btn.classList.toggle('faved', !!isFaved);
+    btn.textContent = isFaved ? '★' : '☆';
+  });
+}
+
+function updateFavCount() {
+  const favBtn = document.querySelector('.filter-btn[data-tag="fav"]');
+  if (favBtn) {
+    const count = Object.keys(favorites).length;
+    favBtn.textContent = `⭐ 我的收藏${count > 0 ? ` (${count})` : ''}`;
+  }
+}
+
+// ===== Get structure image URL =====
+// 结构图已预下载到本地，即时加载无需网络
 function getStructureUrl(card) {
-  if (structureVersion === 2) return `structures-v2/${card.img}`;
-  if (structureVersion === 3) return `structures-v3/${card.img}`;
   return `structures/${card.img}`;
 }
 
-function setStructureVersion(v) {
-  structureVersion = v;
-  document.querySelectorAll('.ver-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(`verBtn${v}`).classList.add('active');
-  if (viewMode === 'flashcard') renderCard();
-  if (viewMode === 'grid') renderGrid();
-  if (viewMode === 'adventure') {
-    if (document.getElementById('advQuiz').style.display !== 'none') renderAdvQuestion();
-    else renderAdvMap();
-  }
+// 在线查看其他风格的结构图（黑白、不同渲染引擎）
+function getStyleLinks(card) {
+  const name = encodeURIComponent(card.name);
+  const nameEn = encodeURIComponent(card.latin);
+  return `
+    <div class="style-links">
+      其他风格：
+      <a href="https://pubchem.ncbi.nlm.nih.gov/compound/${card.cid}" target="_blank" rel="noopener">PubChem详情</a>
+      <a href="https://cactus.nci.nih.gov/chemical/structure/${nameEn}/image?format=png" target="_blank" rel="noopener">CACTUS黑白图</a>
+    </div>
+  `;
 }
 
 // ===== Init =====
@@ -1268,25 +1312,34 @@ function init() {
 
 function buildFilters() {
   const container = document.getElementById('filters');
-  const tags = ['all', '黄酮', '香豆素', '木脂素', '醌类', '萜类', '三萜', '甾体', '生物碱', '补充'];
+  const tags = ['all', 'fav', '黄酮', '香豆素', '木脂素', '醌类', '萜类', '三萜', '甾体', '生物碱', '补充'];
   const labels = {
-    'all': '📋 全部', '黄酮': '🌸 黄酮', '香豆素': '🌿 香豆素', '木脂素': '🪵 木脂素',
+    'all': '📋 全部', 'fav': '⭐ 我的收藏', '黄酮': '🌸 黄酮', '香豆素': '🌿 香豆素', '木脂素': '🪵 木脂素',
     '醌类': '🔴 醌类', '萜类': '🌱 萜类', '三萜': '🔷 三萜', '甾体': '🔶 甾体',
     '生物碱': '⚗️ 生物碱', '补充': '➕ 补充'
   };
   container.innerHTML = tags.map(t =>
-    `<button class="filter-btn${t==='all'?' active':''}" onclick="applyFilter('${t}')">${labels[t]}</button>`
+    `<button class="filter-btn${t==='all'?' active':''}" data-tag="${t}" onclick="applyFilter('${t}')">${labels[t]}</button>`
   ).join('');
+  updateFavCount();
 }
 
 function applyFilter(tag) {
   activeFilter = tag;
-  document.querySelectorAll('.filter-btn').forEach((btn, i) => {
-    const tags = ['all', '黄酮', '香豆素', '木脂素', '醌类', '萜类', '三萜', '甾体', '生物碱', '补充'];
-    btn.classList.toggle('active', tags[i] === tag);
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tag === tag);
   });
 
-  currentCards = tag === 'all' ? [...CARDS] : CARDS.filter(c => c.tag === tag);
+  if (tag === 'all') {
+    currentCards = [...CARDS];
+  } else if (tag === 'fav') {
+    currentCards = CARDS.filter(c => favorites[c.id]);
+    if (currentCards.length === 0) {
+      currentCards = [];
+    }
+  } else {
+    currentCards = CARDS.filter(c => c.tag === tag);
+  }
   document.getElementById('specialSection').style.display = (tag === '甾体' || tag === 'all') ? 'block' : 'none';
 
   currentIndex = 0;
@@ -1325,8 +1378,11 @@ function renderCard() {
   const imgSrc = getStructureUrl(card);
 
   // Front: Structure image + identification tip
+  const favIcon = favorites[card.id] ? '★' : '☆';
+  const favClass = favorites[card.id] ? 'faved' : '';
   document.getElementById('cardFront').innerHTML = `
     <span class="card-number">${currentIndex + 1} / ${currentCards.length}</span>
+    <button class="fav-btn ${favClass}" data-id="${card.id}" onclick="event.stopPropagation();toggleFavorite(${card.id})" title="收藏">${favIcon}</button>
     <span class="card-category" style="background:${tc.bg};color:${tc.text};border-color:${tc.border}">${card.tag}</span>
     <img class="structure-image" src="${imgSrc}" alt="${card.name} 结构式" loading="lazy">
     <div class="card-tip">${card.tip}</div>
@@ -1360,6 +1416,7 @@ function renderCard() {
         <div class="answer-value" style="font-size:0.85rem">${card.primary}</div>
       </div>
     </div>
+    ${getStyleLinks(card)}
   `;
 
   document.getElementById('card').classList.toggle('flipped', isFlipped);
