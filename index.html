@@ -919,8 +919,8 @@
 <div class="ver-toggle">
   <span class="ver-label">结构图风格：</span>
   <button class="ver-btn active" id="verBtn1" onclick="setStructureVersion(1)">A · PubChem</button>
-  <button class="ver-btn" id="verBtn2" onclick="setStructureVersion(2)">B · OpenBabel</button>
-  <button class="ver-btn" id="verBtn3" onclick="setStructureVersion(3)">C · CDK</button>
+  <button class="ver-btn" id="verBtn2" onclick="setStructureVersion(2)">B · RDKit</button>
+  <button class="ver-btn" id="verBtn3" onclick="setStructureVersion(3)">C · 无立体</button>
 </div>
 
 <!-- Filters -->
@@ -1239,7 +1239,7 @@ const TAG_COLORS = {
 // ===== Get structure image URL =====
 // 所有结构图已预下载到本地，即时加载无需网络
 // 3个版本来源不同，风格各异，帮助适应考试不同风格的结构图
-// v1: PubChem 2D（默认） | v2: NIH CACTUS obabel | v3: NIH CACTUS CDK
+// v1: PubChem 2D（默认） | v2: RDKit风格（接近ChemDraw） | v3: 无立体标记简化版（黑白2D，无楔形键/虚线）
 let structureVersion = 1;
 
 function getStructureUrl(card) {
